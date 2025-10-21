@@ -9,19 +9,22 @@ import { NotFound } from './not-found/not-found';
 import { Cart } from './cart/cart';
 import { Favorites } from './favorites/favorites';
 
-
-
 export const routes: Routes = [
-  {path:'', redirectTo:'home', pathMatch:'full',  title:'Home'},
-  {path:'home', component: Home, title:'Home'},
-    {path:'shop', component: Shop, title:'Shop'},
-  {path:'about', component: About, title:'About US'},
-  {path:'contacts', component: Contacts, title:'Contact Us'},
-  {path:'favorites', component: Favorites, title:'Favorites'},
-  {path:'cart', component: Cart, title:'Cart'},
+  { path: '', redirectTo: 'home', pathMatch: 'full', title: 'Home' },
+  { path: 'home', component: Home, title: 'Home' },
+  { path: 'shop', component: Shop, title: 'Shop' },
+  { path: 'about', component: About, title: 'About Us' },
+  { path: 'contacts', component: Contacts, title: 'Contact Us' },
+  { path: 'favorites', component: Favorites, title: 'Favorites' },
+  { path: 'cart', component: Cart, title: 'Cart' },
+  { path: 'login', component: Login, title: 'Login' },
+  { path: 'register', component: Register, title: 'Register' },
+  {
+    path: 'pets/:type',
+    loadComponent: () =>
+      import('./pet-list/pet-list').then((m) => m.PetListComponent),
+    title: 'Shop by Pets',
+  },
 
-  {path:'login', component: Login, title:'Login'},
-  {path:'register', component: Register, title:'register'},
-
-  {path:'**', component: NotFound, title:'NotFound'},
+  { path: '**', component: NotFound, title: 'Not Found' },
 ];

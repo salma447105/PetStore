@@ -1,112 +1,102 @@
 <div class="bg-[rgb(248,249,250)] font-bold">
-    <div class="container mx-auto bg-amber-200 rounded-3xl py-2 px-4 my-5 flex justify-evenly items-center">
-      <div class="w-1/6  text-center ">
-      <a
-        class="nav-link text-xl"
-        routerLinkActive="bg-danger-subtle rounded-2"
-        routerLink="/home"
-      ><span class="me-2">🐾</span>Paw Planet</a>
-      </div>
- <ul class="flex justify-evenly w-2/6 items-center">
-  <li>
-    <a
-      routerLink="/home"
-      routerLinkActive="active-link"
-      class=" font-medium transition"
-      >Home</a
-    >
-  </li>
-  <li>
-    <a
-      routerLink="/shop"
-      routerLinkActive="active-link"
-      class=" font-medium transition"
-      >Shop</a
-    >
-  </li>
-  <li>
-    <a
-      routerLink="/about"
-      routerLinkActive="active-link"
-      class=" font-medium transition"
-      >About Us</a
-    >
-  </li>
-  <li>
-    <a
-      routerLink="/contacts"
-      routerLinkActive="active-link"
-      class=" font-medium transition"
-      >Contact Us</a
-    >
-  </li>
-</ul>
+  <div
+    class="container mx-auto bg-amber-200 rounded-3xl py-2 px-4 my-5 flex justify-evenly items-center"
+  >
+    <div class="w-1/6 text-center">
+      <a class="nav-link text-xl" routerLinkActive="bg-danger-subtle rounded-2" routerLink="/home"
+        ><span class="me-2">🐾</span>Paw Planet</a
+      >
+    </div>
+    <ul class="flex justify-evenly w-2/6 items-center">
+      <li>
+        <a routerLink="/home" routerLinkActive="active-link" class="font-medium transition">Home</a>
+      </li>
+      <li>
+        <a routerLink="/shop" routerLinkActive="active-link" class="font-medium transition">Shop</a>
+      </li>
+      <li>
+        <a routerLink="/about" routerLinkActive="active-link" class="font-medium transition"
+          >About Us</a
+        >
+      </li>
+      <li>
+        <a routerLink="/contacts" routerLinkActive="active-link" class="font-medium transition"
+          >Contact Us</a
+        >
+      </li>
+    </ul>
 
     <div class="flex justify-evenly items-center w-2/6">
-<div class="relative w-64 ">
-  <input
-    type="text"
-    placeholder="Search Products..."
-    class="w-full pr-10 pl-4 py-2 rounded-3xl border-none bg-[rgb(248,249,250)]  focus:outline-none focus:ring-2 focus:ring-amber-500"
-  />
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    class="w-5 h-5 absolute right-3 top-2.5 text-gray-400"
-    fill="none"
-    viewBox="0 0 24 24"
-    stroke="currentColor"
-  >
-    <path
-      stroke-linecap="round"
-      stroke-linejoin="round"
-      stroke-width="2"
-      d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 104.5 4.5a7.5 7.5 0 0012.15 12.15z"
-    />
-  </svg>
-</div>
-<div class="relative group">
- <a
-        class="nav-link "
-        routerLinkActive="active-link"
-        routerLink="/favorites"
-      >    <svg xmlns="http://www.w3.org/2000/svg"
-         fill="none"
-         viewBox="0 0 24 24"
-         stroke-width="1.5"
-         stroke="currentColor"
-         class="w-6 h-6  group-hover:text-red-500 transition">
-      <path stroke-linecap="round" stroke-linejoin="round"
-            d="M21 8.25c0-2.485-2.239-4.5-5-4.5-1.657 0-3.156.895-4 2.236A4.497 4.497 0 008 3.75C5.239 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
-    </svg>
-  </a>
+      <div class="relative w-64">
+        <input
+          type="text"
+          placeholder="Search Products..."
+          class="w-full pr-10 pl-4 py-2 rounded-3xl border-none bg-[rgb(248,249,250)] focus:outline-none focus:ring-2 focus:ring-amber-500"
+        />
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="w-5 h-5 absolute right-3 top-2.5 text-gray-400"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 104.5 4.5a7.5 7.5 0 0012.15 12.15z"
+          />
+        </svg>
+      </div>
+      <div class="relative group">
+        <a class="nav-link" routerLinkActive="active-link" routerLink="/favorites">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="w-6 h-6 group-hover:text-red-500 transition"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M21 8.25c0-2.485-2.239-4.5-5-4.5-1.657 0-3.156.895-4 2.236A4.497 4.497 0 008 3.75C5.239 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
+            />
+          </svg>
+        </a>
 
-  <span
-    class="absolute -top-1 -right-2 bg-amber-600 text-white text-xs font-semibold rounded-full w-4 h-4 flex items-center justify-center group-hover:bg-amber-900 transition">
-    5
-  </span>
-</div>
+        <span
+          class="absolute -top-1 -right-2 bg-amber-600 text-white text-xs font-semibold rounded-full w-4 h-4 flex items-center justify-center group-hover:bg-amber-900 transition"
+        >
+          5
+        </span>
+      </div>
 
-<div class="relative group">
- <a
-        class="nav-link "
-        routerLinkActive="bg-danger-subtle rounded-2"
-        routerLink="/cart"
-      >    <svg xmlns="http://www.w3.org/2000/svg"
-         fill="none"
-         viewBox="0 0 24 24"
-         stroke-width="1.5"
-         stroke="currentColor"
-         class="w-6 h-6  hover:text-amber-500 transition ">
-      <path stroke-linecap="round" stroke-linejoin="round"
-            d="M2.25 3h1.386c.51 0 .955.343 1.086.835l.383 1.437m0 0l1.358 5.094a2.25 2.25 0 002.187 1.684h7.426a2.25 2.25 0 002.187-1.684l1.358-5.094m-14.579 0h14.579m-9.579 11.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm6 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
-    </svg>
-  </a>
+      <div class="relative group">
+        <a class="nav-link" routerLinkActive="bg-danger-subtle rounded-2" routerLink="/cart">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="w-6 h-6 hover:text-amber-500 transition"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M2.25 3h1.386c.51 0 .955.343 1.086.835l.383 1.437m0 0l1.358 5.094a2.25 2.25 0 002.187 1.684h7.426a2.25 2.25 0 002.187-1.684l1.358-5.094m-14.579 0h14.579m-9.579 11.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm6 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z"
+            />
+          </svg>
+        </a>
 
-  <span
-    class="absolute -top-1 -right-2 bg-amber-600 text-white text-xs font-semibold rounded-full w-4 h-4 flex items-center group-hover:bg-amber-900 justify-center">
-    3
-  </span>
-</div>
-
- </div>
+        <span
+          class="absolute -top-1 -right-2 bg-amber-600 text-white text-xs font-semibold rounded-full w-4 h-4 flex items-center group-hover:bg-amber-900 justify-center"
+        >
+          3
+        </span>
+      </div>
+    </div>
+  </div>
 </div>
