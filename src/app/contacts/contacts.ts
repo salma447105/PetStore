@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
-import { Clock, LucideAngularModule, Mail, MapPin } from 'lucide-angular';
+import { LucideAngularModule, MapPin, Mail, Phone, Clock } from 'lucide-angular';
 
 @Component({
   selector: 'app-contacts',
+  standalone: true,
   imports: [LucideAngularModule],
   templateUrl: './contacts.html',
-  styles: ``
+  styles: ``,
 })
 export class Contacts {
-  icons ={Map,Mail,MapPin, Clock}
-
+  icons = { MapPin, Mail, Phone, Clock };
 }
