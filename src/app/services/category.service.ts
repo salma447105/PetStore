@@ -8,7 +8,6 @@ export interface Category {
   image?: string;
   productCount?: number;
 }
-
 @Injectable({
   providedIn: 'root',
 })
