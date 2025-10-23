@@ -1,34 +1,38 @@
 <section class="my-12 px-6 md:px-20">
-  <div class="flex justify-between items-center mb-6">
-    <h2 class="text-3xl font-bold text-gray-900">Browse by category</h2>
+  <div class="flex items-center justify-center gap-6 mb-10">
+    <button
+      (click)="prev()"
+      [disabled]="categories().length <= visibleCount || startIndex() === 0"
+      class="flex items-center justify-center h-12 w-12 bg-white/80 border border-gray-200 rounded-full shadow-sm hover:shadow-md hover:bg-gray-100 text-3xl text-gray-700 font-bold backdrop-blur-sm transition-all duration-300 disabled:opacity-40 disabled:cursor-not-allowed hover:scale-105"
+    >
+      ‹
+    </button>
 
-    <div class="flex gap-3">
-      <button
-        (click)="prev()"
-        [disabled]="categories.length <= visibleCount || startIndex === 0"
-        class="p-2 bg-gray-100 hover:bg-gray-200 rounded-full transition disabled:opacity-50 disabled:cursor-not-allowed"
-      >
-        <span class="text-lg font-bold">←</span>
-      </button>
-      <button
-        (click)="next()"
-        [disabled]="
-          categories.length <= visibleCount || startIndex + visibleCount >= categories.length
-        "
-        class="p-2 bg-gray-100 hover:bg-gray-200 rounded-full transition disabled:opacity-50 disabled:cursor-not-allowed"
-      >
-        <span class="text-lg font-bold">→</span>
-      </button>
-    </div>
+    <h2 class="text-3xl font-bold text-gray-900 text-center tracking-tight select-none">
+      Browse by Category
+    </h2>
+
+    <button
+      (click)="next()"
+      [disabled]="
+        categories().length <= visibleCount || startIndex() + visibleCount >= categories().length
+      "
+      class="flex items-center justify-center h-12 w-12 bg-white/80 border border-gray-200 rounded-full shadow-sm hover:shadow-md hover:bg-gray-100 text-3xl text-gray-700 font-bold backdrop-blur-sm transition-all duration-300 disabled:opacity-40 disabled:cursor-not-allowed hover:scale-105"
+    >
+      ›
+    </button>
   </div>
-  <div *ngIf="loading" class="text-center text-gray-500 py-10">Loading categories...</div>
+
+  <div *ngIf="loading()" class="text-center text-gray-500 py-10">Loading categories...</div>
+
   <div
-    *ngIf="!loading"
+    *ngIf="!loading()"
     class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 transition-all duration-300 ease-in-out"
   >
     <div
-      *ngFor="let cat of visibleCategories; trackBy: trackById"
-      class="bg-white shadow-sm rounded-2xl overflow-hidden cursor-pointer hover:shadow-lg transition duration-300"
+      *ngFor="let cat of visibleCategories(); trackBy: trackById"
+      (click)="onCategoryClick(cat)"
+      class="bg-white shadow-sm rounded-2xl overflow-hidden cursor-pointer hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
     >
       <div
         class="h-40 bg-cover bg-center"

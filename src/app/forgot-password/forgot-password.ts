@@ -2,11 +2,11 @@ import { Component } from '@angular/core';
 import { RouterLink } from "@angular/router";
 
 @Component({
-  selector: 'app-login',
+  selector: 'app-forgot-password',
   imports: [RouterLink],
-  templateUrl: './login.html',
+  templateUrl: './forgot-password.html',
   styles: ``
 })
-export class Login {
+export class ForgotPassword {
 
 }
