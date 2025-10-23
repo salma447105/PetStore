@@ -25,6 +25,11 @@ export const routes: Routes = [
       import('./pet-list/pet-list').then((m) => m.PetListComponent),
     title: 'Shop by Pets',
   },
+  {
+  path: 'category/:id',
+  loadComponent: () => import('./category-list/category-list').then(m => m.CategoryListComponent)
+},
+
 
   { path: '**', component: NotFound, title: 'Not Found' },
 ];

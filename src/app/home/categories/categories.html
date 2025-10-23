@@ -5,7 +5,7 @@
     <div class="flex gap-3">
       <button
         (click)="prev()"
-        [disabled]="categories.length <= visibleCount || startIndex === 0"
+        [disabled]="categories().length <= visibleCount || startIndex() === 0"
         class="p-2 bg-gray-100 hover:bg-gray-200 rounded-full transition disabled:opacity-50 disabled:cursor-not-allowed"
       >
         <span class="text-lg font-bold">←</span>
@@ -13,7 +13,7 @@
       <button
         (click)="next()"
         [disabled]="
-          categories.length <= visibleCount || startIndex + visibleCount >= categories.length
+          categories().length <= visibleCount || startIndex() + visibleCount >= categories().length
         "
         class="p-2 bg-gray-100 hover:bg-gray-200 rounded-full transition disabled:opacity-50 disabled:cursor-not-allowed"
       >
@@ -21,13 +21,16 @@
       </button>
     </div>
   </div>
-  <div *ngIf="loading" class="text-center text-gray-500 py-10">Loading categories...</div>
+
+  <div *ngIf="loading()" class="text-center text-gray-500 py-10">Loading categories...</div>
+
   <div
-    *ngIf="!loading"
+    *ngIf="!loading()"
     class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 transition-all duration-300 ease-in-out"
   >
     <div
-      *ngFor="let cat of visibleCategories; trackBy: trackById"
+      *ngFor="let cat of visibleCategories(); trackBy: trackById"
+      (click)="onCategoryClick(cat)"
       class="bg-white shadow-sm rounded-2xl overflow-hidden cursor-pointer hover:shadow-lg transition duration-300"
     >
       <div
