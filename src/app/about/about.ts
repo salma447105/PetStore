@@ -22,7 +22,7 @@ export class About {
     {
       name: 'spongebob',
       photo:
-      'https://i.guim.co.uk/img/media/b1c1caa029d6f186f9d6b3fabb7f02517eb9c33b/0_58_2528_1519/master/2528.jpg?width=400&dpr=2&s=none&crop=none',
+'https://m.media-amazon.com/images/I/71CjamyEcNL._AC_SX679_.jpg',
       feedback:
         'Great experience! Fast delivery and high-quality pet supplies. My dog is obsessed with the new toys!',
       stars: 4,
