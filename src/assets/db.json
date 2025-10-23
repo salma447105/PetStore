@@ -8,6 +8,39 @@
     { "id": 6, "name": "Laila", "email": "laila@example.com", "role": "user", "password": "laila555" },
     { "id": 7, "name": "Ahmed", "email": "ahmed@example.com", "role": "user", "password": "ahmed456" }
   ],
+  "feedback": [
+  {
+    "id": 1,
+    "comment": "Loved the checkout experience! Super smooth and easy.",
+    "rating": 5,
+    "createdAt": "2025-10-20T14:32:00Z"
+  },
+  {
+    "id": 2,
+    "comment": "The product images were adorable, but I wish there were more details.",
+    "rating": 4,
+    "createdAt": "2025-10-21T09:15:00Z"
+  },
+  {
+    "id": 3,
+    "comment": "Had trouble with payment initially, but it worked after retrying.",
+    "rating": 3,
+    "createdAt": "2025-10-22T18:47:00Z"
+  },
+  {
+    "id": 4,
+    "comment": "Great variety of pet toys! My dog is obsessed.",
+    "rating": 5,
+    "createdAt": "2025-10-23T11:05:00Z"
+  },
+  {
+    "id": 5,
+    "comment": "Would love to see more bird accessories.",
+    "rating": 4,
+    "createdAt": "2025-10-23T20:22:00Z"
+  }
+]
+,
 
   "categories": [
     { "id": 1, "name": "Dogs" },
