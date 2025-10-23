@@ -8,6 +8,7 @@ import { Contacts } from './contacts/contacts';
 import { NotFound } from './not-found/not-found';
 import { Cart } from './cart/cart';
 import { Favorites } from './favorites/favorites';
+import { ForgotPassword } from './forgot-password/forgot-password';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full', title: 'Home' },
@@ -19,6 +20,7 @@ export const routes: Routes = [
   { path: 'cart', component: Cart, title: 'Cart' },
   { path: 'login', component: Login, title: 'Login' },
   { path: 'register', component: Register, title: 'Register' },
+  { path: 'forgot', component: ForgotPassword, title: 'Forgot Password' },
   {
     path: 'pets/:type',
     loadComponent: () =>

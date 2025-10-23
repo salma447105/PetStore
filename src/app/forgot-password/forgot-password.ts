@@ -2,11 +2,11 @@ import { Component } from '@angular/core';
 import { RouterLink } from "@angular/router";
 
 @Component({
-  selector: 'app-register',
+  selector: 'app-forgot-password',
   imports: [RouterLink],
-  templateUrl: './register.html',
+  templateUrl: './forgot-password.html',
   styles: ``
 })
-export class Register {
+export class ForgotPassword {
 
 }
