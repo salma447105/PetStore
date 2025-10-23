@@ -28,6 +28,14 @@ export const routes: Routes = [
     title: 'Shop by Pets',
   },
   {
+  path: 'thank-you',
+  loadComponent: () => import('./feedback/feedback').then(m => m.FeedbackComponent)
+},
+{
+  path: 'test-feedback',
+  loadComponent: () => import('./feedback/feedback').then(m => m.FeedbackComponent)//just to test the feedback ui (remember to delete it later)
+},
+  {
   path: 'category/:id',
   loadComponent: () => import('./category-list/category-list').then(m => m.CategoryListComponent)
 },
