@@ -79,6 +79,10 @@ export class Filter implements OnInit {
     this.selectedRating = 0;
     this.priceRange = { min: 0, max: 500 };
     this.availabilityFilter = 'all';
+
+    // Reset all checkbox inputs
+    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    checkboxes.forEach((checkbox: any) => checkbox.checked = false);
     
     // Reset radio buttons
     const ratingRadio = document.getElementById('rating-0') as HTMLInputElement;

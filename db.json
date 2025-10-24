@@ -20,10 +20,10 @@
   "pets": [
     { "id": 1, "name": "Dog" },
     { "id": 2, "name": "Cat" },
-    { "id": 3, "name": "Bird" },
-    { "id": 4, "name": "Fish" },
-    { "id": 5, "name": "Reptile" },
-    { "id": 6, "name": "Small Animal" }
+    { "id": 3, "name": "Hamster" },
+    { "id": 4, "name": "Parrot" },
+    { "id": 5, "name": "Rabbit" },
+    { "id": 6, "name": "Turtle" }
   ],
 
   "categories": [

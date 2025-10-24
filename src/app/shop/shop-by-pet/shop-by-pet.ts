@@ -1,23 +1,40 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
-
+import { ProductService } from '../../services/product';
 @Component({
   selector: 'app-shop-by-pet',
   imports: [CommonModule, RouterModule],
   templateUrl: './shop-by-pet.html',
   styles: ``
 })
-export class ShopByPet {
+export class ShopByPet implements OnInit {
+
+  pets: any[] = [];
+
+  constructor(private productService: ProductService) {}
+
+  ngOnInit() {
+    this.productService.getPets().subscribe(pets => {
+      this.pets = pets.map(pet => ({
+        ...pet,
+        image: this.getPetImage(pet.name)
+      }));
+    });
+  }
   
-  pets : { name: string, image: string }[] = [
-    { name: 'Cat', image: 'images/cat.png' },
-    { name: 'Dog', image: 'images/dog.png' },
-    { name: 'Hamster', image: 'images/hamster.png' },
-    { name: 'Parrot', image: 'images/parrot.png' },
-    { name: 'Rabbit', image: 'images/rabbit.png' },
-    { name: 'Turtle', image: 'images/turtle.png' }
-  ]
+  private getPetImage(petName: string): string {
+    const imageMap: { [key: string]: string } = {
+      'Cat': '/images/cat.png', 
+      'Dog': '/images/dog.png',
+      'Hamster': '/images/hamster.png',
+      'Parrot': '/images/parrot.png', 
+      'Rabbit': '/images/rabbit.png',
+      'Turtle': '/images/turtle.png'
+    };
+    return imageMap[petName] ;
+  }
+
 
 
 

@@ -40,20 +40,27 @@
     </div>
   </div>
 
-  <!-- Filter by Price -->
+ <!-- Filter by Price -->
   <div>
     <h3 class="text-lg font-semibold text-gray-900 mb-4">Filter by Price</h3>
     <div class="space-y-4">
-      <div class="flex justify-between text-sm text-gray-600">
-        <span>Price: ${{ priceRange.min }} - ${{ priceRange.max }}</span>
+      <div class="flex justify-around text-sm text-gray-600">
+        <span>${{ priceRange.min }}</span>
+        <span>${{ priceRange.max }}</span>
       </div>
-      <div class="flex space-x-2">
-        <label class="text-sm text-gray-700 self-center">Min:</label>
-        <input type="range" min="0" max="500" [(ngModel)]="priceRange.min" 
-               (change)="onPriceChange()" class="w-full">
-        <label class="text-sm text-gray-700 self-center">Max:</label>
-        <input type="range" min="0" max="500" [(ngModel)]="priceRange.max" 
-               (change)="onPriceChange()" class="w-full">
+      <div class="space-y-2">
+        <div class="flex items-center space-x-2">
+          <label class="text-sm text-gray-700 w-12">Min:</label>
+          <input type="range" min="0" max="500" [(ngModel)]="priceRange.min" 
+                (input)="onPriceChange()" class="w-full">
+          <span class="text-sm text-gray-600 w-12">${{ priceRange.min }}</span>
+        </div>
+        <div class="flex items-center space-x-2">
+          <label class="text-sm text-gray-700 w-12">Max:</label>
+          <input type="range" min="0" max="500" [(ngModel)]="priceRange.max" 
+                (input)="onPriceChange()" class="w-full">
+          <span class="text-sm text-gray-600 w-12">${{ priceRange.max }}</span>
+        </div>
       </div>
     </div>
   </div>

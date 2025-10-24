@@ -9,7 +9,7 @@ import { ProductService } from '../services/product';
 
 @Component({
   selector: 'app-shop',
-  imports: [CommonModule, Hero, ShopByPet, Filter, ProductCard, Footer],
+  imports: [CommonModule, Hero, ShopByPet, Filter, ProductCard],
   templateUrl: './shop.html',
   styles: ``
 })
@@ -28,6 +28,10 @@ export class Shop {
   }
 
    onFilterChange(filters: any) {
+    console.log('Applied filters:', filters);
+    console.log('Total products:', this.products.length);
+
+     
     this.filteredProducts = this.products.filter(product => {
       // Filter by categories
       if (filters.categories.length > 0 && !filters.categories.includes(product.categoryId)) {
@@ -66,6 +70,6 @@ export class Shop {
 
       return true;
     });
+    console.log('Filtered products:', this.filteredProducts.length);
   }
-
 }
