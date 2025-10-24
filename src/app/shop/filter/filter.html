@@ -1,0 +1,182 @@
+<div class="bg-white p-6 rounded-lg shadow-md space-y-6">
+
+  <!-- Filter by pets -->
+  <div>
+    <h3 class="text-lg font-semibold text-gray-900 mb-4">Filter by Pets</h3>
+    <div class="space-y-2">
+      @for (pet of pets; track pet.id) {
+        <div class="flex items-center">
+          <input 
+            type="checkbox" 
+            [id]="'pet-' + pet.id"
+            [value]="pet.id"
+            (change)="onPetChange(pet.id, $event)"
+            class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
+          <label [for]="'pet-' + pet.id" class="ml-2 text-gray-700">
+            {{ pet.name }}
+          </label>
+        </div>
+      }
+    </div>
+  </div>
+
+  <!-- Filter by Categories -->
+  <div>
+    <h3 class="text-lg font-semibold text-gray-900 mb-4">Filter by categories</h3>
+    <div class="space-y-2">
+      @for (category of categories; track category.id) {
+        <div class="flex items-center">
+          <input 
+            type="checkbox" 
+            [id]="'category-' + category.id"
+            [value]="category.id"
+            (change)="onCategoryChange(category.id, $event)"
+            class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
+          <label [for]="'category-' + category.id" class="ml-2 text-gray-700">
+            {{ category.name }}
+          </label>
+        </div>
+      }
+    </div>
+  </div>
+
+ <!-- Filter by Price -->
+  <div>
+    <h3 class="text-lg font-semibold text-gray-900 mb-4">Filter by Price</h3>
+    <div class="space-y-4">
+      <div class="flex justify-around text-sm text-gray-600">
+        <span>${{ priceRange.min }}</span>
+        <span>${{ priceRange.max }}</span>
+      </div>
+      <div class="space-y-2">
+        <div class="flex items-center space-x-2">
+          <label class="text-sm text-gray-700 w-12">Min:</label>
+          <input type="range" min="0" max="500" [(ngModel)]="priceRange.min" 
+                (input)="onPriceChange()" class="w-full">
+          <span class="text-sm text-gray-600 w-12">${{ priceRange.min }}</span>
+        </div>
+        <div class="flex items-center space-x-2">
+          <label class="text-sm text-gray-700 w-12">Max:</label>
+          <input type="range" min="0" max="500" [(ngModel)]="priceRange.max" 
+                (input)="onPriceChange()" class="w-full">
+          <span class="text-sm text-gray-600 w-12">${{ priceRange.max }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Filter by Rating -->
+   <div>
+    <h3 class="text-lg font-semibold text-gray-900 mb-4">Filter by Rating</h3>
+    <div class="space-y-2">
+      @for (rating of [4, 3, 2, 1]; track rating) {
+        <div class="flex items-center">
+          <input 
+            type="radio" 
+            [id]="'rating-' + rating"
+            name="rating"
+            [value]="rating"
+            (change)="onRatingChange(rating)"
+            class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
+          <label [for]="'rating-' + rating" class="ml-2 text-gray-700 flex items-center">
+            <div class="flex">
+              @for (star of [1,2,3,4,5]; track star) {
+                <svg 
+                  [class]="'w-4 h-4 ' + (star <= rating ? 'text-yellow-400' : 'text-gray-300')" 
+                  fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                </svg>
+              }
+            </div>
+            <span class="ml-1 text-sm text-gray-600">& up</span>
+          </label>
+        </div>
+      }
+      <div class="flex items-center">
+        <input 
+          type="radio" 
+          id="rating-0"
+          name="rating"
+          value="0"
+          (change)="onRatingChange(0)"
+          class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
+        <label for="rating-0" class="ml-2 text-gray-700">Any Rating</label>
+      </div>
+    </div>
+  </div>
+  
+
+  <!-- Filter by Availability -->
+   <div>
+    <h3 class="text-lg font-semibold text-gray-900 mb-4">Filter by Availability</h3>
+    <div class="space-y-3">
+      <div class="flex items-center">
+        <input 
+          type="radio" 
+          id="availability-all"
+          name="availability"
+          value="all"
+          (change)="onAvailabilityChange('all')"
+          checked
+          class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
+        <label for="availability-all" class="ml-2 text-gray-700">
+          Show All Products
+        </label>
+      </div>
+      <div class="flex items-center">
+        <input 
+          type="radio" 
+          id="availability-instock"
+          name="availability"
+          value="instock"
+          (change)="onAvailabilityChange('instock')"
+          class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
+        <label for="availability-instock" class="ml-2 text-gray-700 flex items-center">
+          <span class="w-2 h-2 bg-green-500 rounded-full mr-2"></span>
+          In Stock Only
+        </label>
+      </div>
+      <div class="flex items-center">
+        <input 
+          type="radio" 
+          id="availability-lowstock"
+          name="availability"
+          value="lowstock"
+          (change)="onAvailabilityChange('lowstock')"
+          class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
+        <label for="availability-lowstock" class="ml-2 text-gray-700 flex items-center">
+          <span class="w-2 h-2 bg-yellow-500 rounded-full mr-2"></span>
+          Low Stock (1-5 items)
+        </label>
+      </div>
+      <div class="flex items-center">
+        <input 
+          type="radio" 
+          id="availability-outofstock"
+          name="availability"
+          value="outofstock"
+          (change)="onAvailabilityChange('outofstock')"
+          class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
+        <label for="availability-outofstock" class="ml-2 text-gray-700 flex items-center">
+          <span class="w-2 h-2 bg-red-500 rounded-full mr-2"></span>
+          Out of Stock
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <!-- Action Buttons -->
+  <div class="flex gap-3 pt-4">
+    <button 
+      (click)="applyFilters()"
+      class="flex-1 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors duration-200 font-medium">
+      Apply Filters
+    </button>
+    <button 
+      (click)="clearFilters()"
+      class="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded-lg transition-colors duration-200 font-medium">
+      Clear Filters
+    </button>
+  </div>
+
+</div>
