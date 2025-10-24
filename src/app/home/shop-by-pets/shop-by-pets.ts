@@ -15,7 +15,7 @@ export class ShopByPetsComponent implements OnInit {
   constructor(private petService: PetService, private router: Router) {}
 
   ngOnInit(): void {
-    this.pets = this.petService.petTypes(); // ✅ now safe
+    this.pets = this.petService.petTypes();
   }
 
   onPetClick(pet: { name: string }): void {
