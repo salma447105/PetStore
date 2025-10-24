@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { Hero } from '../home/hero/hero';
-import { Footer } from '../footer/footer';
 import { ShopByPet } from './shop-by-pet/shop-by-pet';
 import { Filter } from './filter/filter';
 import { ProductCard } from './product-card/product-card';
