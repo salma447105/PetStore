@@ -1,4 +1,3 @@
-// src/app/services/category.service.ts
 import { Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs';
@@ -18,7 +17,7 @@ export class CategoryService {
   constructor(private http: HttpClient) {}
 
   fetchCategories() {
-    this.http.get<any>('assets/db.json').pipe(
+    this.http.get<any>('../../../db.json').pipe(
       map((data) => {
         const db = data;
         const products = db.products || [];

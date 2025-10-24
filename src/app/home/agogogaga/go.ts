@@ -4,10 +4,10 @@ import { RouterModule, Router } from '@angular/router';
 import { PetService } from '../../services/pet.service';
 
 @Component({
-  selector: 'app-shop-by-pets',
+  selector: 'app-go',
   standalone: true,
   imports: [CommonModule, RouterModule],
-  templateUrl: './shop-by-pets.html',
+  templateUrl: './go.html',
 })
 export class ShopByPetsComponent implements OnInit {
   pets: any[] = [];
