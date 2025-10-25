@@ -1,16 +1,18 @@
+
+
+
+
 <div class="container my-12 px-6 md:px-20">
   <h2 class="text-3xl font-bold text-gray-900 mb-8">Shop by pet</h2>
 
   <div class="flex gap-6 flex-wrap justify-center">
     @for( pet of pets; track pet.id) {
-    <div
-      class="rounded-full w-32 h-32 bg-orange-100 flex flex-col items-center justify-center border border-gray-300 cursor-pointer hover:shadow-lg transition-shadow duration-300"
-    >
-      <a [routerLink]="['/pets', pet.name.toLowerCase()]" class="flex flex-col items-center">
-        <img [src]="pet.image" class="w-20 h-20 rounded-full object-cover" />
-        <h3 class="text-gray-700 font-medium mt-2">{{ pet.name }}</h3>
-      </a>
-    </div>
+      <div class="rounded-full w-32 h-32 bg-orange-100 flex flex-col items-center justify-center border border-gray-300 cursor-pointer hover:shadow-lg transition-shadow duration-300">
+        <a [routerLink]="['/pets', pet.name.toLowerCase()]" class="flex flex-col items-center">
+          <img [src]="pet.image" class="w-20 h-20 rounded-full object-cover"  />
+          <h3 class="text-gray-700 font-medium mt-2">{{ pet.name}}</h3>
+        </a>
+      </div>
     }
   </div>
 </div>

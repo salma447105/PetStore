@@ -1,3 +1,4 @@
+// app/pet-list/pet-list.ts
 import { Component, OnInit, computed, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
