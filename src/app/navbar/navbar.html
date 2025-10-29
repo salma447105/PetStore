@@ -48,6 +48,7 @@
           />
         </svg>
       </div>
+
       <div class="relative group">
         <a class="nav-link" routerLinkActive="active-link" routerLink="/favorites">
           <svg
@@ -66,11 +67,13 @@
           </svg>
         </a>
 
-        <span
-          class="absolute -top-1 -right-2 bg-amber-600 text-white text-xs font-semibold rounded-full w-4 h-4 flex items-center justify-center group-hover:bg-amber-900 transition"
-        >
-          5
-        </span>
+        @if (favoritesCount > 0) {
+          <span
+            class="absolute -top-1 -right-2 bg-amber-600 text-white text-xs font-semibold rounded-full w-4 h-4 flex items-center justify-center group-hover:bg-amber-900 transition"
+          >
+            {{ favoritesCount }}
+          </span>
+        }
       </div>
 
       <div class="relative group">

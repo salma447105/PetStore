@@ -1,1 +1,26 @@
-<p>favorites works!</p>
+<!-- favorites.html -->
+<div class="container mx-auto my-8 px-4">
+  <h1 class="text-3xl font-bold text-gray-900 mb-8">My Favorites</h1>
+  
+  @if (favoriteProducts.length > 0) {
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      @for (product of favoriteProducts; track product.id) {
+        <app-product-card [product]="product"></app-product-card>
+      }
+    </div>
+  } @else {
+    <div class="text-center py-12">
+      <svg class="w-24 h-24 text-gray-300 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+      </svg>
+      <h2 class="text-2xl font-semibold text-gray-600 mb-2">No favorites yet</h2>
+      <p class="text-gray-500 mb-6">Start adding products to your favorites by clicking the heart icon!</p>
+      <a 
+        routerLink="/shop" 
+        class="inline-flex items-center px-4 py-2 bg-[oklch(90.1%_0.076_70.697)] text-grey font-semibold rounded-lg hover:bg-[oklch(88%_0.076_70.697)] transition-colors"
+      >
+        Start Shopping
+      </a>
+    </div>
+  }
+</div>
