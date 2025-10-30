@@ -9,6 +9,8 @@ import { NotFound } from './not-found/not-found';
 import { Cart } from './cart/cart';
 import { Favorites } from './favorites/favorites';
 import { ForgotPassword } from './forgot-password/forgot-password';
+import { dashboard } from './dashboard/dashboard';
+
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full', title: 'Home' },
@@ -21,6 +23,8 @@ export const routes: Routes = [
   { path: 'login', component: Login, title: 'Login' },
   { path: 'register', component: Register, title: 'Register' },
   { path: 'forgot', component: ForgotPassword, title: 'Forgot Password' },
+  { path: 'dashboard', component: dashboard, title: 'Dashboard' },
+
   {
     path: 'pets/:type',
     loadComponent: () =>
