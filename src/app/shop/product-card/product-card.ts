@@ -19,7 +19,7 @@ export class ProductCard implements OnInit {
   ) {}
 
   ngOnInit() {
-    console.log(this.product);
+    // console.log(this.product);
     // Check if product is in favorites using the service
     this.isFavorite = this.favoritesService.isFavorite(this.product.id);
     // Subscribe to favorites changes
