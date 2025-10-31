@@ -22,13 +22,13 @@ export class ShopByPet implements OnInit {
       }));
     });
   }
-  
+
   private getPetImage(petName: string): string {
     const imageMap: { [key: string]: string } = {
-      'Cat': '/images/cat.png', 
+      'Cat': '/images/cat.png',
       'Dog': '/images/dog.png',
       'Hamster': '/images/hamster.png',
-      'Parrot': '/images/parrot.png', 
+      'Parrot': '/images/parrot.png',
       'Rabbit': '/images/rabbit.png',
       'Turtle': '/images/turtle.png'
     };

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Hero } from '../home/hero/hero';
-import { ShopByPet } from './shop-by-pet/shop-by-pet';
+import { Footer } from '../footer/footer';
+// import { ShopByPet } from '../home/shop-by-pet/shop-by-pet';
 import { Filter } from './filter/filter';
 import { ProductCard } from './product-card/product-card';
 import { CommonModule } from '@angular/common';
@@ -8,7 +9,7 @@ import { ProductService } from '../services/product';
 
 @Component({
   selector: 'app-shop',
-  imports: [CommonModule, Hero, ShopByPet, Filter, ProductCard],
+  imports: [CommonModule, Hero, Filter, ProductCard],
   templateUrl: './shop.html',
   styles: ``
 })

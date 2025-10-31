@@ -37,6 +37,14 @@ private apiUrl = 'http://localhost:3000';
       })
     );
   }
+getProductsByPet(petId: number): Observable<any[]> {
+  return this.http.get<any[]>(`${this.apiUrl}/products?petId=${petId}`).pipe(
+    catchError(error => {
+      console.error('Error fetching products by pet:', error);
+      return of([]);
+    })
+  );
+}
 
   getPets(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/pets`).pipe(
@@ -60,4 +68,3 @@ private apiUrl = 'http://localhost:3000';
 
 
 }
-

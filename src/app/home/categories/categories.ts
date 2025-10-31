@@ -1,7 +1,7 @@
 import { Component, OnInit, computed, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
-import { CategoryService } from '../../services/category.service';
+import { ProductService } from '../../services/product';
 
 @Component({
   selector: 'app-categories',
@@ -14,16 +14,18 @@ export class CategoriesComponent implements OnInit {
   visibleCount = 4;
   loading = signal(true);
 
-  categories = computed(() => this.categoryService.categories());
+  categories = signal<any[]>([]);
   visibleCategories = computed(() =>
     this.categories().slice(this.startIndex(), this.startIndex() + this.visibleCount)
   );
 
-  constructor(private categoryService: CategoryService, private router: Router) {}
+  constructor(private productService: ProductService, private router: Router) {}
 
   ngOnInit(): void {
-    this.categoryService.fetchCategories();
-    this.loading.set(false);
+    this.productService.getCategories().subscribe((data) => {
+      this.categories.set(data);
+      this.loading.set(false);
+    });
   }
 
   next(): void {
@@ -43,7 +45,6 @@ export class CategoriesComponent implements OnInit {
   }
 
   onCategoryClick(cat: any): void {
-    this.categoryService.setSelectedCategory(cat);
     this.router.navigate(['/category', cat.id]);
   }
 }
