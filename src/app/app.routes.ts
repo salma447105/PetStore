@@ -21,23 +21,25 @@ export const routes: Routes = [
   { path: 'favorites', component: Favorites, title: 'Favorites' },
   { path: 'cart', component: Cart, title: 'Cart' },
   { path: 'login', component: Login, title: 'Login' },
+{
+  path: 'pets/:petId',
+  loadComponent: () =>
+    import('./components/products-by-pet.component')
+      .then(m => m.ProductsByPetComponent),
+  title: 'Products by Pet'
+}
+,
   { path: 'register', component: Register, title: 'Register' },
   { path: 'forgot', component: ForgotPassword, title: 'Forgot Password' },
   { path: 'dashboard', component: dashboard, title: 'Dashboard' },
 
-  {
-    path: 'pets/:type',
-    loadComponent: () =>
-      import('./pet-list/pet-list').then((m) => m.PetListComponent),
-    title: 'Shop by Pets',
-  },
   {
   path: 'thank-you',
   loadComponent: () => import('./feedback/feedback').then(m => m.FeedbackComponent)
 },
 {
   path: 'test-feedback',
-  loadComponent: () => import('./feedback/feedback').then(m => m.FeedbackComponent)//just to test the feedback ui (remember to delete it later)
+  loadComponent: () => import('./feedback/feedback').then(m => m.FeedbackComponent)
 },
   {
   path: 'category/:id',

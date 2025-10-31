@@ -26,16 +26,17 @@
     { "id": 6, "name": "Turtle" }
   ],
 
-  "categories": [
-    { "id": 1, "name": "Accessories" },
-    { "id": 2, "name": "Toys" },
-    { "id": 3, "name": "Pet Food" },
-    { "id": 4, "name": "Grooming" },
-    { "id": 5, "name": "Health Care" },
-    { "id": 6, "name": "Training" },
-    { "id": 7, "name": "Outdoor" },
-    { "id": 8, "name": "Pet Clothing" }
-  ],
+ "categories": [
+  { "id": 1, "name": "Accessories", "image": "https://plus.unsplash.com/premium_photo-1734668098277-62597873776c?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8YWNjZXNzb3JpZXMlMjBwZXRzfGVufDB8fDB8fHww&auto=format&fit=crop&q=60&w=600" },
+  { "id": 2, "name": "Toys", "image": "https://images.unsplash.com/photo-1589924749359-9697080c3577?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cGV0JTIwVG95c3xlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&q=60&w=600" },
+  { "id": 3, "name": "Pet Food", "image": "https://images.unsplash.com/photo-1589924691995-400dc9ecc119?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1171" },
+  { "id": 4, "name": "Grooming", "image": "https://images.unsplash.com/photo-1719464454959-9cf304ef4774?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8cGV0JTIwR3Jvb21pbmd8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&q=60&w=600" },
+  { "id": 5, "name": "Health Care", "image": "https://media.istockphoto.com/id/454435997/photo/this-isnt-a-chew-toy.webp?a=1&b=1&s=612x612&w=0&k=20&c=T7LzWfHrFGIwFUaFqUqa-3nRchX-SZMReJCXS-JACKE=" },
+  { "id": 6, "name": "Training", "image": "https://plus.unsplash.com/premium_photo-1679518509639-b4803d6290ed?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8VHJhaW5pbmclMjBwZXR8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&q=60&w=600" },
+  { "id": 7, "name": "Outdoor", "image": "https://media.istockphoto.com/id/2181409271/photo/golden-retriever-dog-playing-with-human-owner-at-park.webp?a=1&b=1&s=612x612&w=0&k=20&c=aQMVHKfj6wQDHxk8_tM7kL4XeqBamzLXyhFQHpD3ghM=" },
+  { "id": 8, "name": "Pet Clothing", "image": "https://media.istockphoto.com/id/146893341/photo/young-bulldog-puppies-dresses-like-humans.webp?a=1&s=612x612&w=0&k=20&c=cn6SKgYKZGN7akfAfJVYqelYcSc8myqyAi2iP9CNQwY=" }
+]
+,
 
   "products": [
     {

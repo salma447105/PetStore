@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Hero } from '../home/hero/hero';
 import { Footer } from '../footer/footer';
-import { ShopByPet } from './shop-by-pet/shop-by-pet';
+// import { ShopByPet } from '../home/shop-by-pet/shop-by-pet';
 import { Filter } from './filter/filter';
 import { ProductCard } from './product-card/product-card';
 import { CommonModule } from '@angular/common';
@@ -9,7 +9,7 @@ import { ProductService } from '../services/product';
 
 @Component({
   selector: 'app-shop',
-  imports: [CommonModule, Hero, ShopByPet, Filter, ProductCard],
+  imports: [CommonModule, Hero, Filter, ProductCard],
   templateUrl: './shop.html',
   styles: ``
 })
@@ -31,7 +31,7 @@ export class Shop {
     console.log('Applied filters:', filters);
     console.log('Total products:', this.products.length);
 
-     
+
     this.filteredProducts = this.products.filter(product => {
       // Filter by categories
       if (filters.categories.length > 0 && !filters.categories.includes(product.categoryId)) {

@@ -1,9 +1,5 @@
 <app-hero></app-hero>
-<app-shop-by-pet></app-shop-by-pet>
-
-
 <div class="container mx-auto my-8 px-4 md:px-8 flex flex-col md:flex-row gap-8">
-
   <!-- Filter Section -->
   <div class="w-full md:w-1/4">
     <app-filter (filterChange)="onFilterChange($event)"></app-filter>
@@ -11,24 +7,23 @@
   <!-- Products Section -->
   <div class="w-full md:w-3/4">
     <div class="flex justify-between items-center mb-6">
-      <p class="text-gray-600">Showing {{filteredProducts.length}} results</p>
+      <p class="text-gray-600">Showing {{ filteredProducts.length }} results</p>
 
       <select class="border border-gray-300 rounded px-3 py-2">
         <option>Sort by latest</option>
         <option>Sort by price: low to high</option>
         <option>Sort by price: high to low</option>
       </select>
-
     </div>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
       @for (product of filteredProducts; track product.id) {
-        <app-product-card [product]="product"></app-product-card>
+      <app-product-card [product]="product"></app-product-card>
       }@empty {
-        <div class="col-span-3 text-center py-8">
-          <p class="text-gray-500">No products found matching your filters</p>
-          <p class="text-sm text-gray-400 mt-2">Try adjusting your filter criteria</p>
-        </div>
+      <div class="col-span-3 text-center py-8">
+        <p class="text-gray-500">No products found matching your filters</p>
+        <p class="text-sm text-gray-400 mt-2">Try adjusting your filter criteria</p>
+      </div>
       }
     </div>
 
@@ -40,4 +35,3 @@
     </div>
   </div>
 </div>
-
