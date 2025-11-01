@@ -1,15 +1,16 @@
 import { Component } from '@angular/core';
-import { Hero } from '../home/hero/hero';
-import { Footer } from '../footer/footer';
+// import { Hero } from '../home/hero/hero';
+// import { Footer } from '../footer/footer';
 // import { ShopByPet } from '../home/shop-by-pet/shop-by-pet';
 import { Filter } from './filter/filter';
 import { ProductCard } from './product-card/product-card';
 import { CommonModule } from '@angular/common';
 import { ProductService } from '../services/product';
+import { ShopHero } from './shop-hero/shop-hero';
 
 @Component({
   selector: 'app-shop',
-  imports: [CommonModule, Hero, Filter, ProductCard],
+  imports: [CommonModule, ShopHero, Filter, ProductCard],
   templateUrl: './shop.html',
   styles: ``
 })
