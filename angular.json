@@ -22,12 +22,17 @@
               "zone.js"
             ],
             "tsConfig": "tsconfig.app.json",
-            "assets": [
+           "assets": [
+              "src/favicon.ico",
+              "src/assets",
               {
                 "glob": "**/*",
-                "input": "public"
+                "input": "public",
+                "output": "/"
               }
-            ],
+
+                ],
+
             "styles": [
               "src/styles.css"
             ]
@@ -58,6 +63,9 @@
         },
         "serve": {
           "builder": "@angular/build:dev-server",
+          "options": {
+          "proxyConfig": "proxy.conf.json"
+          },
           "configurations": {
             "production": {
               "buildTarget": "petStore:build:production"
