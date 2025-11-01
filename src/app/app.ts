@@ -5,7 +5,6 @@ import { Footer } from './footer/footer';
 import { ToastComponent } from './toast/toast';
 
 
-
 @Component({
   selector: 'app-root',
   imports: [RouterOutlet, Navbar,Footer,ToastComponent ],

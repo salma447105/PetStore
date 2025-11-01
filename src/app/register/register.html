@@ -1,32 +1,89 @@
 <div class="flex-grow flex justify-center bg-[rgb(248,249,250)] p-14">
-  <div class="bg-[oklch(98%_0.03_65)] grid grid-cols-1 sm:grid-cols-2 sm:w-3/4 rounded-2xl shadow-2xl sm:pl-8 pb-9">
+  <div class="bg-[oklch(98%_0.03_65)] grid grid-cols-1 sm:grid-cols-2 sm:w-3/4 rounded-2xl shadow-2xl sm:pl-11 pb-9">
     <section class="flex items-center justify-center">
-      <img src="https://cdn.pixabay.com/photo/2024/01/22/15/36/cat-8525662_1280.png" class="max-w-full" alt="Register page logo"/>
+      <img src="https://cdn.pixabay.com/photo/2012/05/03/23/13/cat-46676_1280.png" class="max-w-full w-[97%]" alt="Register page logo"/>
     </section>
 
-    <section class="space-y-6">
+    <section class="space-y-6 sm:-ml-9">
       <div class="pt-12">
         <h2 class="text-gray-800 text-4xl font-bold text-center mb-2">Create an Account</h2>
         <p class="text-center text-lg text-gray-500">Join us and start your pet journey</p>
       </div>
 
+      @if(isRegistered) {
+        <div class="w-3/4 mx-auto text-center">
+          <p class="p-3 rounded-lg bg-green-100 border border-green-400 text-green-800 font-medium shadow transition-all duration-500 ease-in-out">🎉 Account Created Successfully!</p>
+        </div>
+      }
+
+      @if(auth.error()){
+        <div class="w-3/4 mx-auto text-center">
+          <p class="p-3 rounded-lg bg-red-100 border border-red-400 text-red-800 font-medium shadow transition-all duration-500 ease-in-out">{{auth.error()}}</p>
+        </div>
+      }
+
       <div class="flex flex-wrap justify-center gap-4">
-        <a routerLink="/home" class="flex w-[10%]">
+        <a class="flex w-[10%] hover:cursor-pointer" (click)="signUpGoogle_()">
           <img src="https://img.icons8.com/color/512/google-logo.png" alt="Google icon"/>
         </a>
-        <a routerLink="/home" class="flex w-[10%]">
+        <a class="flex w-[9.5%] hover:cursor-pointer" (click)="signUpFB_()">
           <img src="https://cdn.simpleicons.org/facebook" alt="Facebook icon"/>
         </a>
-        <a routerLink="/home" class="flex w-[10%]">
-          <img src="https://cdn.simpleicons.org/apple" alt="Apple icon"/>
+        <a class="flex w-[10%]" (click)="signUpTwitter_()">
+          <img src="https://pngimg.com/uploads/x_logo/x_logo_PNG18.png" alt="X icon"/>
         </a>
       </div>
 
-      <div class="flex flex-col gap-3.5 items-center">
-        <input type="text" placeholder="Full Name" class="w-[80%] p-2.5 px-5 rounded-lg text-lg text-gray-800 shadow-lg shadow-orange-200 focus:outline-none focus:ring-2 focus:ring-amber-600" />
-        <input type="email" placeholder="Email" class="w-[80%] p-2.5 px-5 rounded-lg text-lg text-gray-800 shadow-lg shadow-orange-200 focus:outline-none focus:ring-2 focus:ring-amber-600" />
-        <input type="password" placeholder="Password" class="w-[80%] p-2.5 px-5 rounded-lg text-lg text-gray-800 shadow-lg shadow-orange-200 focus:outline-none focus:ring-2 focus:ring-amber-600 mb-2.5" />
-        <button type="button" class="font-semibold bg-[oklch(90.1%_0.076_70.697)] w-[80%] py-2 rounded-lg text-lg shadow-xl transition hover:bg-[oklch(83.1%_0.076_70.697)] mb-2.5" routerLink="/home">Register</button>
+      <div [formGroup]="regForm" class="flex flex-col gap-3.5 items-center">
+        <input formControlName="fullName" type="text" placeholder="Full Name" class="w-[80%] p-2.5 px-5 rounded-lg text-lg text-gray-800 shadow-lg shadow-orange-200 focus:outline-none focus:ring-2 focus:ring-amber-600" />
+        <p class="text-gray-400 w-[80%] text-center text-sm">Full name must be between 15 and 30 characters</p>
+        @if (!getFullNameValid() && getFullNameTouched()) {
+          <p class="text-red-500 text-sm -mt-2">
+            @if(regForm.get('fullName')?.errors?.["required"]) {
+              Please enter your full name.
+            }
+            @else if (regForm.get('fullName')?.errors?.["minlength"]) {
+              Full name must be at least 15 characters long.
+            }
+            @else if (regForm.get('fullName')?.errors?.["maxlength"]) {
+              Full name cannot exceed 30 characters.
+            }
+          </p>
+        }
+        <input formControlName="email" type="email" placeholder="Email" class="w-[80%] p-2.5 px-5 rounded-lg text-lg text-gray-800 shadow-lg shadow-orange-200 focus:outline-none focus:ring-2 focus:ring-amber-600" />
+        <p class="text-gray-400 w-[80%] text-center text-sm">A valid email address (e.g., name@example.com)</p>
+        @if (!getEmailValid() && getEmailTouched()) {
+          <p class="text-red-500 text-sm -mt-2">
+            @if(regForm.get('email')?.errors?.["required"]) {
+              Please enter your email address.
+            }
+            @else if (regForm.get('email')?.errors?.["email"] || regForm.get('email')?.errors?.["pattern"]) {
+              Please enter a valid email address.
+            }
+          </p>
+        }
+        <input formControlName="password" type="password" placeholder="Password" class="w-[80%] p-2.5 px-5 rounded-lg text-lg text-gray-800 shadow-lg shadow-orange-200 focus:outline-none focus:ring-2 focus:ring-amber-600" />
+        <p class="text-gray-400 text-sm w-[80%] text-center mb-2.5">Password must be at least 10 characters including uppercase, lowercase, number, special character</p>
+        @if (!getPassValid() && getPassTouched()) {
+          <div class="text-red-500 text-sm -mt-[1.125rem] mb-2.5">
+            @if (regForm.get('password')?.errors?.['required']) {
+              Please enter your password.
+            }
+            @else if (regForm.get('password')?.errors?.['minlength']) {
+              Password must be at least 10 characters long.
+            }
+            @else if (!regForm.get('password')?.errors?.['minlength'] && regForm.get('password')?.errors?.['pattern']) {
+              Password must contain at least:
+              <ul class="list-disc pl-10">
+                <li>1 uppercase letter</li>
+                <li>1 lowercase letter</li>
+                <li>1 number</li>
+                <li>1 special character</li>
+              </ul>
+            }
+          </div>
+        }
+        <button type="button" class="font-semibold bg-[oklch(90.1%_0.076_70.697)] w-[80%] py-2 rounded-lg text-lg shadow-xl transition hover:bg-[oklch(83.1%_0.076_70.697)] mb-2.5 disabled:opacity-50 disabled:cursor-not-allowed" [disabled]="!getFormValid()" (click)="signUp_()">Register</button>
         <p class="text-lg text-gray-500">
           Already have an account? <a class="text-orange-400" routerLink="/login">Login</a>
         </p>
@@ -34,4 +91,3 @@
     </section>
   </div>
 </div>
-
