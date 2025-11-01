@@ -1,0 +1,22 @@
+<section class="my-12 px-6 md:px-20 text-center">
+  <h2 class="text-3xl font-bold text-gray-900 mb-8 capitalize">{{ categoryName }} Products</h2>
+
+  <div *ngIf="products.length > 0; else noProducts">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+      <div
+        *ngFor="let product of products"
+        class="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition-transform hover:scale-105"
+      >
+        <img [src]="product.image" [alt]="product.name" class="w-full h-56 object-cover" />
+        <div class="p-4">
+          <h3 class="text-xl font-semibold text-gray-800">{{ product.name }}</h3>
+          <p class="text-gray-500 text-sm">{{ product.price | currency }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <ng-template #noProducts>
+    <p class="text-gray-500 text-lg">No products found in this category.</p>
+  </ng-template>
+</section>

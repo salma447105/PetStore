@@ -1,0 +1,69 @@
+<section
+  class="bg-white py-16 px-4 md:px-12 lg:px-24 bg-cover bg-center bg-no-repeat"
+  style="
+    background-image: url('https://images.unsplash.com/photo-1576201836106-db1758fd1c97?auto=format&fit=crop&q=80&w=1600');
+  "
+>
+  <div
+    class="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-10 bg-white/85 backdrop-blur-sm p-8 rounded-2xl shadow-lg"
+  >
+    <div class="md:w-1/2 text-center md:text-left space-y-5">
+      <h1 class="text-4xl md:text-5xl font-extrabold text-gray-800 leading-tight">
+        We’d Love Your Feedback 💬
+      </h1>
+      <p class="text-gray-600 text-lg">
+        Tell us about your experience — your feedback helps us make every visit to PetStore even
+        better for you and your furry friends.
+      </p>
+      <p class="text-[oklch(40%_0.08_65)] font-medium italic">“Happy pets, happy humans!”</p>
+    </div>
+
+    <div
+      class="xl:w-1/2 relative w-full h-auto bg-gradient-to-tr from-[oklch(97%_0.04_75)] to-[oklch(94%_0.06_70)] rounded-3xl shadow-md overflow-hidden flex items-center justify-center"
+    >
+      <div
+        class="absolute -top-10 -left-10 w-40 h-40 bg-[oklch(92%_0.09_65)] rounded-full blur-3xl opacity-40"
+      ></div>
+      <div
+        class="absolute -bottom-12 -right-8 w-44 h-44 bg-[oklch(88%_0.07_60)] rounded-full blur-3xl opacity-40"
+      ></div>
+
+      <form
+        (submit)="submitFeedback(); $event.preventDefault()"
+        class="relative bg-white/80 backdrop-blur-lg rounded-2xl shadow-xl p-6 w-[90%] space-y-4"
+      >
+        <h2 class="text-2xl font-bold text-gray-800 text-center mb-2">Share Your Thoughts</h2>
+
+        <div>
+          <label class="block text-gray-700 mb-1 font-medium">Your Comment</label>
+          <textarea
+            [formControl]="comment"
+            rows="4"
+            placeholder="Write something nice or we will ruin you..."
+            class="w-full border border-[oklch(90%_0.03_65)] rounded-xl py-2 px-3 resize-none focus:ring-2 focus:ring-[oklch(88%_0.076_70.697)] outline-none"
+          ></textarea>
+        </div>
+
+        <div>
+          <label class="block text-gray-700 mb-1 font-medium">Rating</label>
+          <select
+            [formControl]="rating"
+            class="w-full border border-[oklch(90%_0.03_65)] rounded-xl py-2 px-3 focus:ring-2 focus:ring-[oklch(88%_0.076_70.697)] outline-none"
+          >
+            <option value="" disabled>Select a rating</option>
+            <option *ngFor="let r of [1, 2, 3, 4, 5]" [value]="r">
+              {{ r }} Star{{ r > 1 ? 's' : '' }}
+            </option>
+          </select>
+        </div>
+
+        <button
+          type="submit"
+          class="w-full bg-[oklch(90.1%_0.076_70.697)] text-gray-800 font-semibold py-2 rounded-xl hover:bg-[oklch(88%_0.076_70.697)] transition"
+        >
+          Submit Feedback
+        </button>
+      </form>
+    </div>
+  </div>
+</section>

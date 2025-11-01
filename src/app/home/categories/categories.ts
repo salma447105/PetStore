@@ -1,51 +1,50 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, computed, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CategoryService } from '../../services/category.service';
+import { RouterModule, Router } from '@angular/router';
+import { ProductService } from '../../services/product';
 
 @Component({
   selector: 'app-categories',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule],
   templateUrl: './categories.html',
 })
 export class CategoriesComponent implements OnInit {
-  categories: any[] = [];
-  startIndex = 0;
+  startIndex = signal(0);
   visibleCount = 4;
-  loading = true;
+  loading = signal(true);
 
-  constructor(private categoryService: CategoryService) {}
+  categories = signal<any[]>([]);
+  visibleCategories = computed(() =>
+    this.categories().slice(this.startIndex(), this.startIndex() + this.visibleCount)
+  );
+
+  constructor(private productService: ProductService, private router: Router) {}
 
   ngOnInit(): void {
-    this.categoryService.getCategories().subscribe({
-      next: (data) => {
-        this.categories = data;
-        this.loading = false;
-      },
-      error: (err) => {
-        console.error('Error loading data:', err);
-        this.loading = false;
-      },
+    this.productService.getCategories().subscribe((data) => {
+      this.categories.set(data);
+      this.loading.set(false);
     });
   }
 
   next(): void {
-    if (this.startIndex + this.visibleCount < this.categories.length) {
-      this.startIndex++;
+    if (this.startIndex() + this.visibleCount < this.categories().length) {
+      this.startIndex.set(this.startIndex() + 1);
     }
   }
 
   prev(): void {
-    if (this.startIndex > 0) {
-      this.startIndex--;
+    if (this.startIndex() > 0) {
+      this.startIndex.set(this.startIndex() - 1);
     }
-  }
-
-  get visibleCategories() {
-    return this.categories.slice(this.startIndex, this.startIndex + this.visibleCount);
   }
 
   trackById(index: number, item: any): number {
     return item.id;
+  }
+
+  onCategoryClick(cat: any): void {
+    this.router.navigate(['/category', cat.id]);
   }
 }

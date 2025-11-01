@@ -1,42 +1,68 @@
-<section class="my-12 px-6 md:px-20">
-  <div class="flex justify-between items-center mb-6">
-    <h2 class="text-3xl font-bold text-gray-900">Browse by category</h2>
+<section class="py-28 px-6 md:px-24 bg-gradient-to-b from-orange-50/70 to-white">
+  <!-- Title + Buttons -->
+  <div class="flex items-center justify-center gap-6 mb-16">
+    <button
+      (click)="prev()"
+      [disabled]="categories().length <= visibleCount || startIndex() === 0"
+      class="flex items-center justify-center h-12 w-12 bg-white border border-gray-200 rounded-full shadow-sm hover:shadow-lg hover:bg-orange-100 text-3xl text-gray-700 font-bold backdrop-blur-sm transition-all duration-300 disabled:opacity-40 disabled:cursor-not-allowed hover:scale-110"
+    >
+      ‹
+    </button>
 
-    <div class="flex gap-3">
-      <button
-        (click)="prev()"
-        [disabled]="categories.length <= visibleCount || startIndex === 0"
-        class="p-2 bg-gray-100 hover:bg-gray-200 rounded-full transition disabled:opacity-50 disabled:cursor-not-allowed"
-      >
-        <span class="text-lg font-bold">←</span>
-      </button>
-      <button
-        (click)="next()"
-        [disabled]="
-          categories.length <= visibleCount || startIndex + visibleCount >= categories.length
-        "
-        class="p-2 bg-gray-100 hover:bg-gray-200 rounded-full transition disabled:opacity-50 disabled:cursor-not-allowed"
-      >
-        <span class="text-lg font-bold">→</span>
-      </button>
-    </div>
+    <h2 class="text-4xl md:text-5xl font-bold text-gray-900 text-center tracking-tight select-none">
+      Browse by Category
+    </h2>
+
+    <button
+      (click)="next()"
+      [disabled]="
+        categories().length <= visibleCount || startIndex() + visibleCount >= categories().length
+      "
+      class="flex items-center justify-center h-12 w-12 bg-white border border-gray-200 rounded-full shadow-sm hover:shadow-lg hover:bg-orange-100 text-3xl text-gray-700 font-bold backdrop-blur-sm transition-all duration-300 disabled:opacity-40 disabled:cursor-not-allowed hover:scale-110"
+    >
+      ›
+    </button>
   </div>
-  <div *ngIf="loading" class="text-center text-gray-500 py-10">Loading categories...</div>
+
+  <!-- Loading -->
+  <div *ngIf="loading()" class="text-center text-gray-500 py-10 text-lg">Loading categories...</div>
+
+  <!-- Grid -->
   <div
-    *ngIf="!loading"
-    class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 transition-all duration-300 ease-in-out"
+    *ngIf="!loading()"
+    class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-12 transition-all duration-300 ease-in-out"
   >
     <div
-      *ngFor="let cat of visibleCategories; trackBy: trackById"
-      class="bg-white shadow-sm rounded-2xl overflow-hidden cursor-pointer hover:shadow-lg transition duration-300"
+      *ngFor="let cat of visibleCategories(); trackBy: trackById"
+      (click)="onCategoryClick(cat)"
+      class="group bg-white rounded-3xl shadow-md overflow-hidden cursor-pointer hover:shadow-2xl hover:-translate-y-2 border border-transparent hover:border-orange-200 transition-all duration-300"
     >
-      <div
-        class="h-40 bg-cover bg-center"
-        [style.background-image]="'url(' + cat.image + ')'"
-      ></div>
-      <div class="p-4">
-        <h3 class="text-lg font-semibold text-gray-800">{{ cat.name }}</h3>
-        <p class="text-gray-500 text-sm">{{ cat.productCount }} products</p>
+      <div class="flex flex-col items-center justify-center p-8">
+        <!-- Image Circle -->
+        <div
+          class="relative w-40 h-40 rounded-full overflow-hidden bg-orange-50 flex items-center justify-center shadow-sm group-hover:shadow-lg transition-all duration-300"
+        >
+          <img
+            [src]="cat.image"
+            [alt]="cat.name"
+            class="w-32 h-32 object-cover rounded-full group-hover:scale-110 transition-transform duration-300"
+          />
+          <div
+            class="absolute inset-0 rounded-full bg-gradient-to-t from-orange-200/25 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+          ></div>
+        </div>
+
+        <!-- Text -->
+        <div class="mt-6 text-center">
+          <h3
+            class="text-xl font-semibold text-gray-800 group-hover:text-orange-600 transition-colors duration-300"
+          >
+            {{ cat.name }}
+          </h3>
+          <p class="text-gray-500 text-sm mt-1 tracking-wide">
+            {{ cat.productCount || 0 }} products
+          </p>
+        </div>
       </div>
     </div>
   </div>
