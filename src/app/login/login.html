@@ -4,29 +4,52 @@
       <img src="https://cdn.pixabay.com/photo/2024/01/22/15/36/cat-8525662_1280.png" class="max-w-full" alt="Login page logo"/>
     </section>
 
-    <section class="space-y-6">
+    <section class="space-y-6 sm:-ml-9">
       <div class="pt-12">
         <h2 class="text-gray-800 text-4xl font-bold text-center mb-2">Welcome Back🤎</h2>
         <p class="text-center text-lg text-gray-500">Please login to your account</p>
       </div>
 
+      @if(auth.error()){
+        <div class="w-3/4 mx-auto text-center">
+          <p class="p-3 rounded-lg bg-red-100 border border-red-400 text-red-800 font-medium shadow transition-all duration-500 ease-in-out">{{auth.error()}}</p>
+        </div>
+      }
+
       <div class="flex flex-wrap justify-center gap-4">
-        <a routerLink="/home" class="flex w-[10%]">
+        <a class="flex w-[10%] hover:cursor-pointer" (click)="loginGoogle_()">
           <img src="https://img.icons8.com/color/512/google-logo.png" alt="Google icon"/>
         </a>
-        <a routerLink="/home" class="flex w-[10%]">
+        <a class="flex w-[9.5%] hover:cursor-pointer" (click)="loginFB_()">
           <img src="https://cdn.simpleicons.org/facebook" alt="Facebook icon"/>
         </a>
-        <a routerLink="/home" class="flex w-[10%]">
-          <img src="https://cdn.simpleicons.org/apple" alt="Apple icon"/>
+        <a class="flex w-[10%]" (click)="loginTwitter_()">
+          <img src="https://pngimg.com/uploads/x_logo/x_logo_PNG18.png" alt="X icon"/>
         </a>
       </div>
 
-      <div class="flex flex-col gap-3.5 items-center">
-        <input type="email" placeholder="Email" class="w-[80%] p-2.5 px-5 rounded-lg text-lg text-gray-800 shadow-lg shadow-orange-200 focus:outline-none focus:ring-2 focus:ring-amber-600"/>
-        <input type="password" placeholder="Password" class="w-[80%] p-2.5 px-5 rounded-lg text-lg text-gray-800 shadow-lg shadow-orange-200 focus:outline-none focus:ring-2 focus:ring-amber-600 mb-2.5"/>
-        <button type="button" class="font-semibold bg-[oklch(90.1%_0.076_70.697)] w-[80%] py-2 rounded-lg text-lg shadow-xl transition hover:bg-[oklch(83.1%_0.076_70.697)] mb-2.5" routerLink="/home">Login</button>
-        <a class="underline text-lg underline-offset-2 text-gray-500" routerLink="/forgot">Forgot password?</a>
+      <div [formGroup]="loginForm" class="flex flex-col gap-3.5 items-center">
+        <input formControlName="email" type="email" placeholder="Email" class="w-[80%] p-2.5 px-5 rounded-lg text-lg text-gray-800 shadow-lg shadow-orange-200 focus:outline-none focus:ring-2 focus:ring-amber-600"/>
+        @if (!getEmailValid() && getEmailTouched()) {
+          <p class="text-red-500 text-sm">
+            @if(loginForm.get('email')?.errors?.["required"]) {
+              Please enter your email address.
+            }
+            @else if (loginForm.get('email')?.errors?.["email"] || loginForm.get('email')?.errors?.["pattern"]) {
+              Please enter a valid email address.
+            }
+          </p>
+        }
+        <input formControlName="password" type="password" placeholder="Password" class="w-[80%] p-2.5 px-5 rounded-lg text-lg text-gray-800 shadow-lg shadow-orange-200 focus:outline-none focus:ring-2 focus:ring-amber-600 mb-2.5"/>
+        @if (!getPassValid() && getPassTouched()) {
+          <p class="text-red-500 text-sm -mt-2.5 mb-2.5">
+            @if (loginForm.get('password')?.errors?.['required']) {
+              Please enter your password.
+            }
+          </p>
+        }
+        <button type="button" class="font-semibold bg-[oklch(90.1%_0.076_70.697)] w-[80%] py-2 rounded-lg text-lg shadow-xl transition hover:bg-[oklch(83.1%_0.076_70.697)] mb-2.5 disabled:opacity-50 disabled:cursor-not-allowed" [disabled]="!getFormValid()" (click)="login_()">Login</button>
+        <a class="underline text-lg underline-offset-2 text-gray-500" routerLink="/forgotPass">Forgot password?</a>
         <p class="text-lg text-gray-500">
           Don't have an account? <a class="text-orange-400" routerLink="/register">Register</a>
         </p>
