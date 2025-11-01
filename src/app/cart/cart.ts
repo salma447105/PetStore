@@ -4,6 +4,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { RouterLink } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 import { StripeService } from '../services/stripe.service';
+import { CartService } from '../services/cart/cart.service';
 
 interface CartItem {
   id: number;
@@ -33,7 +34,8 @@ export class Cart implements OnInit {
 
   constructor(
     private http: HttpClient,
-    private stripeService: StripeService
+    private stripeService: StripeService,
+    private cartService: CartService
   ) {}
 
   async ngOnInit(): Promise<void> {
@@ -50,41 +52,29 @@ export class Cart implements OnInit {
   }
 
   private async loadCartItems(): Promise<void> {
-    // Here you would typically load cart items from a service or local storage
-    this.cartItems = [
-      {
-        id: 1,
-        name: 'Acme Dog Toy',
-        description: 'Durable chew toy for playful pups',
-        price: 9.99,
-        qty: 2
-      },
-      {
-        id: 2,
-        name: 'Catnip Mouse',
-        description: 'Interactive catnip stuffed toy',
-        price: 6.5,
-        qty: 1
-      }
-    ];
+    const cartData = this.cartService.getCart();
+    this.cartItems = cartData?.items ?? [];
   }
 
-  increase(item: CartItem): void {
-    item.qty++;
+  async increase(item: CartItem): Promise<void> {
+    await this.cartService.updateItemQuantity(item.id, 1);
+    await this.loadCartItems();
   }
 
-  decrease(item: CartItem): void {
+  async decrease(item: CartItem): Promise<void> {
     if (item.qty > 1) {
-      item.qty--;
+      await this.cartService.updateItemQuantity(item.id, -1);
+      await this.loadCartItems();
     }
   }
 
-  remove(item: CartItem): void {
-    this.cartItems = this.cartItems.filter(i => i.id !== item.id);
+  async remove(item: CartItem): Promise<void> {
+    await this.cartService.removeItem(item.id);
+    await this.loadCartItems();
   }
 
   getItemsCount(): number {
-    return this.cartItems.reduce((total, item) => total + item.qty, 0);
+    return this.cartService.getItemCount();
   }
 
   async checkout(): Promise<void> {
@@ -104,7 +94,7 @@ export class Cart implements OnInit {
         price: item.price
       }));
 
-      const response = await firstValueFrom(this.http.post('http://localhost:3000/create-checkout-session', {
+      const response = await firstValueFrom(this.http.post('http://localhost:4100/create-checkout-session', {
         items,
         total: this.total
       })) as { url?: string; id?: string };

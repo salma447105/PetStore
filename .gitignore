@@ -7,7 +7,8 @@
 /bazel-out
 
 # Node
-/node_modules
+# ignore all node_modules folders
+node_modules/
 npm-debug.log
 yarn-error.log
 
