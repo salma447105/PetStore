@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { ProductService } from '../services/product';
 import { FavoritesService } from '../services/favorites'; 
+import { ToastService } from '../services/toast'; 
+
 @Component({
   selector: 'app-product-details',
   imports: [CommonModule, RouterModule],
@@ -19,7 +21,9 @@ export class ProductDetails implements OnInit{
     private route: ActivatedRoute,
     private router: Router,
     private productService: ProductService,
-    private favoritesService: FavoritesService 
+    private favoritesService: FavoritesService,
+    private toastService: ToastService
+
 
   ) {}
 
@@ -27,10 +31,11 @@ export class ProductDetails implements OnInit{
     const productId = Number(this.route.snapshot.paramMap.get('id'));
     console.log('Loading product with ID:', productId);
     this.loadProduct(productId);
-    this.checkFavoriteStatus(productId);
 
     this.favoritesService.getFavoritesObservable().subscribe(favorites => {
-      this.isFavorite = favorites.includes(productId);
+      if (this.product) {
+        this.isFavorite = favorites.includes(this.product.id);
+      }
     });
 
   }
@@ -39,15 +44,8 @@ export class ProductDetails implements OnInit{
     this.productService.getProductById(productId).subscribe(product => {
       console.log('Product loaded:', product);
       this.product = product;
+      this.isFavorite = this.favoritesService.isFavorite(product.id);
     });
-  }
-
-  private checkFavoriteStatus(productId: number) {
-    // Check if product is in favorites 
-    this.isFavorite = this.favoritesService.isFavorite(productId);
-
-    // const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
-    // this.isFavorite = favorites.includes(productId);
   }
 
   goBack() {
@@ -55,12 +53,38 @@ export class ProductDetails implements OnInit{
   }
 
   addToCart() {
-    // Add to cart functionality 
+    let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+    const existingItem = cart.find((item: any) => item.id === this.product.id);
+    
+    if (existingItem) {
+      existingItem.quantity += 1;
+    } else {
+      cart.push({
+        ...this.product,
+        quantity: 1
+      });
+    }
+    
+    localStorage.setItem('cart', JSON.stringify(cart));
+    
+    // Show toast notification
+    this.toastService.show('Product added to cart!', 'success');
     console.log('Added to cart:', this.product);
+
   }
 
-  toggleFavorite() {
-    this.favoritesService.toggleFavorite(this.product.id);  }
+  toggleFavorite(event: Event) {
+    const wasFavorite = this.isFavorite;
+    this.favoritesService.toggleFavorite(this.product.id);
+  
+     // Show toast notification
+    if (wasFavorite) {
+      this.toastService.show('Product removed from favorites!', 'info');
+    } else {
+      this.toastService.show('Product added to favorites!', 'success');
+    }
+  
+  }
 }
 
 

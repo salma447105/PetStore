@@ -15,9 +15,9 @@ import { ProductService } from '../services/product';
 })
 export class Shop {
   products: any[] = [];
-  // filteredProducts: any[] = [];
+  filteredProducts: any[] = [];
   currentPage: number = 1;
-  itemsPerPage: number = 12;
+  itemsPerPage: number = 9;
   sortBy: string = 'latest';
 
   constructor(private productService: ProductService) { }
@@ -25,87 +25,84 @@ export class Shop {
   ngOnInit() {
     this.productService.getProducts().subscribe(products => {
       this.products = products;
-      // this.filteredProducts = products;
+      this.filteredProducts = products;
       this.applySorting();
     });
   }
 
-  // onFilterChange(filters: any) {
-  //   console.log('Applied filters:', filters);
-  //   console.log('Total products:', this.products.length);
+  onFilterChange(filters: any) {
+    console.log('Applied filters:', filters);
+    console.log('Total products:', this.products.length);
 
-  //   const petFilter = filters.pets;
-  //   const editedPetsFilters = petFilter.map((num: string | number) => +num);
-  //   //  console.log('Edited filters:', editedPetsFilters);
-     
-  //   const categoryFilter = filters.categories;
-  //   const editedCategoryFilters = categoryFilter.map((num: string | number) => +num);
-  //   //  console.log('Edited category filters:', editedCategoryFilters);
+    const petFilter = filters.pets;
+    const editedPetsFilters = petFilter.map((num: string | number) => +num);
 
-  //   console.log(filters.priceRange);
-  //   console.log(filters.rating);
-     
-  //   this.filteredProducts = this.products.filter(product => {
-  //     // Filter by pets
-  //     if (filters.pets.length > 0 && editedPetsFilters.includes(product.petId)) {
-  //       console.log('passed product', product);
-  //       return true;
-  //     }
-  //     // Filter by categories
-  //     if (filters.categories.length > 0 && editedCategoryFilters.includes(product.categoryId)) {
-  //       return true;
-  //     }
+    const categoryFilter = filters.categories;
+    const editedCategoryFilters = categoryFilter.map((num: string | number) => +num);
 
-  //     // Filter by price
-  //     if (product.price >= filters.priceRange.min && product.price <= filters.priceRange.max) {
-  //       console.log('passed product');
-  //       return true;
-  //     }
+    console.log(filters.priceRange);
+    console.log(filters.rating);
 
-  //     // console.log('Rating filter applied:', filters.rating.toString());
-  //     // Filter by rating
-  //     if (filters.rating.value !== 0) {
-  //       console.log('Rating filter applied:', filters.rating);
-  //       switch (filters.rating) {
-  //         case 1:
-  //           if (product.rating < 2 && product.rating >= 1) return true;
-  //           break;
-  //         case 2:
-  //           if (product.rating < 3 && product.rating >= 2) return true;
-  //           break;
-  //         case 3:
-  //           if (product.rating < 4 && product.rating >= 3) return true;
-  //           break;
-  //         case 4:
-  //           if (product.rating < 5 && product.rating >= 4) return true;
-  //           break;
-  //         case 5:
-  //           if (product.rating === 5) return true;
-  //           break;
-  //       }
-  //     }
-  //     // Filter by availability
-  //     if (filters.availability !== 'all') {
-  //       switch (filters.availability) {
-  //         case 'instock':
-  //           if (product.numberInStock > 5) return true;
-  //           break;
-  //         case 'lowstock':
-  //           if (product.numberInStock > 0 && product.numberInStock <= 5) return true;
-  //           break;
-  //         case 'outofstock':
-  //           if (product.numberInStock == 0) return true;
-  //           break;
-  //       }
+    this.filteredProducts = this.products.filter(product => {
+      let matches = true;
 
-  //     }
+      // Filter by pets
+      if (filters.pets.length > 0) {
+        matches = matches && editedPetsFilters.includes(product.petId);
+      }
 
-  //     return false;
-  //   });
-  //   this.applySorting();
-  //   this.currentPage = 1;
-  //   console.log('Filtered products:', this.filteredProducts.length);
-  // }
+      // Filter by categories
+      if (filters.categories.length > 0) {
+        matches = matches && editedCategoryFilters.includes(product.categoryId);
+      }
+
+      // Filter by price
+      matches = matches && (product.price >= filters.priceRange.min && product.price <= filters.priceRange.max);
+
+      // Filter by rating
+      if (filters.rating !== 0) {
+        console.log('Rating filter applied:', filters.rating);
+        switch (filters.rating) {
+          case 1:
+            matches = matches && (product.rating < 2 && product.rating >= 1);
+            break;
+          case 2:
+            matches = matches && (product.rating < 3 && product.rating >= 2);
+            break;
+          case 3:
+            matches = matches && (product.rating < 4 && product.rating >= 3);
+            break;
+          case 4:
+            matches = matches && (product.rating < 5 && product.rating >= 4);
+            break;
+          case 5:
+            matches = matches && (product.rating === 5);
+            break;
+        }
+      }
+
+      // Filter by availability
+      if (filters.availability !== 'all') {
+        switch (filters.availability) {
+          case 'instock':
+            matches = matches && (product.numberInStock > 5);
+            break;
+          case 'lowstock':
+            matches = matches && (product.numberInStock > 0 && product.numberInStock <= 5);
+            break;
+          case 'outofstock':
+            matches = matches && (product.numberInStock === 0);
+            break;
+        }
+      }
+
+      return matches;
+    });
+
+    this.applySorting();
+    this.currentPage = 1;
+    console.log('Filtered products:', this.filteredProducts.length);
+  }
 
 
  
@@ -119,40 +116,40 @@ export class Shop {
   applySorting() {
     switch (this.sortBy) {
       case 'price-low-high':
-        this.products.sort((a, b) => a.price - b.price);
+        this.filteredProducts.sort((a, b) => a.price - b.price);
         break;
       case 'price-high-low':
-        this.products.sort((a, b) => b.price - a.price);
+        this.filteredProducts.sort((a, b) => b.price - a.price);
         break;
       case 'rating-low-high':
-        this.products.sort((a, b) => a.rating - b.rating);
+        this.filteredProducts.sort((a, b) => a.rating - b.rating);
         break;
       case 'rating-high-low':
-        this.products.sort((a, b) => b.rating - a.rating);
+        this.filteredProducts.sort((a, b) => b.rating - a.rating);
         break;
       case 'stock-low-high':
-        this.products.sort((a, b) => a.numberInStock - b.numberInStock);
+        this.filteredProducts.sort((a, b) => a.numberInStock - b.numberInStock);
         break;
       case 'stock-high-low':
-        this.products.sort((a, b) => b.numberInStock - a.numberInStock);
+        this.filteredProducts.sort((a, b) => b.numberInStock - a.numberInStock);
         break;
       case 'latest':
       default:
         // Sort by ID (assuming higher ID = newer)
-      this.products.sort((a, b) => b.id - a.id);
-      break;
+        this.filteredProducts.sort((a, b) => b.id - a.id);
+        break;
     }
   }
 
 
   // Pagination methods
   get totalPages(): number {
-    return Math.ceil(this.products.length / this.itemsPerPage);
+    return Math.ceil(this.filteredProducts.length / this.itemsPerPage);
   }
 
   get paginatedProducts(): any[] {
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
-    return this.products.slice(startIndex, startIndex + this.itemsPerPage);
+    return this.filteredProducts.slice(startIndex, startIndex + this.itemsPerPage);
   }
 
   goToPage(page: number) {

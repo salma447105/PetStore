@@ -2,15 +2,14 @@
 <div class="container mx-auto my-8 px-4 md:px-8 flex flex-col md:flex-row gap-8">
   <!-- Filter Section -->
    <div class="w-full md:w-1/4">
-    <app-filter ></app-filter>
-    <!-- (filterChange)="onFilterChange($event)" -->
+    <app-filter (filterChange)="onFilterChange($event)" ></app-filter>
   </div>
 
 
   <!-- Products Section -->
   <div class="w-full md:w-3/4">
     <div class="flex justify-between items-center mb-6">
-      <p class="text-gray-600">Showing {{products.length}} results</p>
+      <p class="text-gray-600">Showing {{filteredProducts.length}} results</p>
 
       <select 
         [value]="sortBy" 
@@ -39,7 +38,7 @@
     </div>
 
     <!-- Pagination -->
-    @if (products.length > 0) {
+    @if (filteredProducts.length > 0) {
       <div class="flex justify-center items-center mt-8 gap-2">
         <!-- Previous Button -->
         <button 
@@ -54,8 +53,8 @@
         @for (page of getPageNumbers(); track page) {
           <button 
             (click)="goToPage(page)"
-            [class.bg-blue-600]="currentPage === page"
-            [class.text-white]="currentPage === page"
+            [class.bg-orange-300]="currentPage === page"
+            [class.text-black]="currentPage === page"
             class="px-3 py-2 border border-gray-300 rounded hover:bg-gray-50"
           >
             {{ page }}

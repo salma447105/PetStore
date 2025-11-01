@@ -1,0 +1,23 @@
+<!-- toast.html -->
+<div class="fixed top-4 right-4 z-50 space-y-2 w-80">
+  @for (toast of toastService.toasts$ | async; track toast.id) {
+    <div 
+      [class]="{
+        'toast-success': toast.type === 'success',
+        'toast-error': toast.type === 'error', 
+        'toast-info': toast.type === 'info'
+      }"
+      class="p-4 rounded-lg shadow-lg flex justify-between items-center animate-in slide-in-from-right duration-300"
+    >
+      <span class="flex-1">{{ toast.message }}</span>
+      <button 
+        (click)="removeToast(toast.id)"
+        class="ml-4 text-white hover:text-gray-200 transition-colors"
+      >
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+  }
+</div>

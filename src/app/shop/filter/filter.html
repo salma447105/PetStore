@@ -11,8 +11,8 @@
             [id]="'pet-' + pet.id"
             [value]="pet.id"
             (change)="onPetChange(pet.id, $event)"
-            class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
-          <label [for]="'pet-' + pet.id" class="ml-2 text-gray-700">
+            class="w-4 h-4 border-gray-300 rounded accent-amber-500  ">
+          <label [for]="'pet-' + pet.id" class="ml-2 text-gray-700 " >
             {{ pet.name }}
           </label>
         </div>
@@ -31,7 +31,7 @@
             [id]="'category-' + category.id"
             [value]="category.id"
             (change)="onCategoryChange(category.id, $event)"
-            class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
+            class="w-4 h-4 border-gray-300 rounded accent-amber-500">
           <label [for]="'category-' + category.id" class="ml-2 text-gray-700">
             {{ category.name }}
           </label>
@@ -52,13 +52,13 @@
         <div class="flex items-center space-x-2">
           <label class="text-sm text-gray-700 w-12">Min:</label>
           <input type="range" min="0" max="500" [(ngModel)]="priceRange.min" 
-                (input)="onPriceChange()" class="w-full">
+                (input)="onPriceChange()" class="w-full accent-amber-500">
           <span class="text-sm text-gray-600 w-12">${{ priceRange.min }}</span>
         </div>
         <div class="flex items-center space-x-2">
           <label class="text-sm text-gray-700 w-12">Max:</label>
           <input type="range" min="0" max="500" [(ngModel)]="priceRange.max" 
-                (input)="onPriceChange()" class="w-full">
+                (input)="onPriceChange()" class="w-full accent-amber-500">
           <span class="text-sm text-gray-600 w-12">${{ priceRange.max }}</span>
         </div>
       </div>
@@ -77,7 +77,7 @@
             name="rating"
             [value]="rating"
             (change)="onRatingChange(rating)"
-            class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
+            class="w-4 h-4  border-gray-300 rounded accent-amber-500">
           <label [for]="'rating-' + rating" class="ml-2 text-gray-700 flex items-center">
             <div class="flex">
               @for (star of [1,2,3,4,5]; track star) {
@@ -98,7 +98,7 @@
           name="rating"
           value="0"
           (change)="onRatingChange(0)"
-          class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
+          class="w-4 h-4 text-blue-600 border-gray-300 rounded accent-amber-500 focus:ring-amber-200">
         <label for="rating-0" class="ml-2 text-gray-700">Any Rating</label>
       </div>
     </div>
@@ -117,7 +117,7 @@
           value="all"
           (change)="onAvailabilityChange('all')"
           checked
-          class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
+          class="w-4 h-4 accent-amber-500 border-gray-300 rounded focus:ring-orange-500">
         <label for="availability-all" class="ml-2 text-gray-700">
           Show All Products
         </label>
@@ -129,7 +129,7 @@
           name="availability"
           value="instock"
           (change)="onAvailabilityChange('instock')"
-          class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
+          class="w-4 h-4  border-gray-300 rounded focus:ring-orange-500 accent-amber-500 ">
         <label for="availability-instock" class="ml-2 text-gray-700 flex items-center">
           <span class="w-2 h-2 bg-green-500 rounded-full mr-2"></span>
           In Stock Only
@@ -142,7 +142,7 @@
           name="availability"
           value="lowstock"
           (change)="onAvailabilityChange('lowstock')"
-          class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
+          class="w-4 h-4  border-gray-300 rounded focus:ring-orange-500 accent-amber-500">
         <label for="availability-lowstock" class="ml-2 text-gray-700 flex items-center">
           <span class="w-2 h-2 bg-yellow-500 rounded-full mr-2"></span>
           Low Stock
@@ -155,7 +155,7 @@
           name="availability"
           value="outofstock"
           (change)="onAvailabilityChange('outofstock')"
-          class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
+          class="w-4 h-4 text-blue-600 border-gray-300 rounded accent-amber-500 focus:ring-orange-500">
         <label for="availability-outofstock" class="ml-2 text-gray-700 flex items-center">
           <span class="w-2 h-2 bg-red-500 rounded-full mr-2"></span>
           Out of Stock
@@ -165,15 +165,15 @@
   </div>
 
   <!-- Action Buttons -->
-  <div class="flex gap-3 pt-4">
+  <div class="flex gap-4 pt-4">
     <button 
       (click)="applyFilters()"
-      class="flex-1 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors duration-200 font-medium">
+      class="flex-1 bg-[oklch(75%_0.183_55.934)] hover:bg-[oklch(55.3%_0.195_38.402)] text-gray-800 px-1 py-1 rounded-lg transition-colors duration-200 ">
       Apply Filters
     </button>
     <button 
       (click)="clearFilters()"
-      class="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded-lg transition-colors duration-200 font-medium">
+      class="flex-1 bg-[oklch(88%_0.07_60)] hover:bg-[oklch(80%_0.07_60)] text-gray-800 px-1 py-1 rounded-lg transition-colors duration-200 ">
       Clear Filters
     </button>
   </div>

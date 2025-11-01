@@ -2,6 +2,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { FavoritesService } from '../../services/favorites';
+import { ToastService } from '../../services/toast'; 
+
 @Component({
   selector: 'app-product-card',
   imports: [CommonModule],
@@ -15,7 +17,8 @@ export class ProductCard implements OnInit {
 
   constructor(
     private router: Router,
-    private favoritesService: FavoritesService
+    private favoritesService: FavoritesService,
+    private toastService: ToastService
   ) {}
 
   ngOnInit() {
@@ -48,11 +51,19 @@ export class ProductCard implements OnInit {
     // }
     
     // localStorage.setItem('favorites', JSON.stringify(favorites));
+  
+    // Show toast notification
+    if (this.isFavorite) {
+      this.toastService.show('Product added to favorites!', 'success');
+    } else {
+      this.toastService.show('Product removed from favorites!', 'info');
+    }
+
   }
 
   addToCart(event: Event) {
-    event.stopPropagation(); // Prevent navigation when clicking add to cart
-    
+    // Prevent navigation when clicking add to cart
+     event.stopPropagation();
     // Add to cart functionality
     let cart = JSON.parse(localStorage.getItem('cart') || '[]');
     const existingItem = cart.find((item: any) => item.id === this.product.id);
@@ -68,5 +79,9 @@ export class ProductCard implements OnInit {
     
     localStorage.setItem('cart', JSON.stringify(cart));
     console.log('Added to cart:', this.product.name);
+
+    this.toastService.show('Product added to cart!', 'success');
+    console.log('Added to cart:', this.product.name);
+
   }
 }
