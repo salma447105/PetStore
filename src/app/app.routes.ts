@@ -31,7 +31,7 @@ export const routes: Routes = [
         .then(m => m.ProductsByPetComponent),
     title: 'Products by Pet'
   },
-  { path: 'dashboard', component: dashboard, title: 'Dashboard', canActivate: [adminGuard] },
+  { path: 'dashboard', component: dashboard, title: 'Dashboard' },
   {
   path: 'thank-you',
   loadComponent: () => import('./feedback/feedback').then(m => m.FeedbackComponent)
