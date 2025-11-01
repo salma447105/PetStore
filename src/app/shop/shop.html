@@ -1,24 +1,34 @@
-<app-hero></app-hero>
+<app-shop-hero></app-shop-hero>
 <div class="container mx-auto my-8 px-4 md:px-8 flex flex-col md:flex-row gap-8">
   <!-- Filter Section -->
-  <div class="w-full md:w-1/4">
-    <app-filter (filterChange)="onFilterChange($event)"></app-filter>
+   <div class="w-full md:w-1/4">
+    <app-filter (filterChange)="onFilterChange($event)" ></app-filter>
   </div>
+
+
   <!-- Products Section -->
   <div class="w-full md:w-3/4">
     <div class="flex justify-between items-center mb-6">
-      <p class="text-gray-600">Showing {{ filteredProducts.length }} results</p>
+      <p class="text-gray-600">Showing {{filteredProducts.length}} results</p>
 
-      <select class="border border-gray-300 rounded px-3 py-2">
-        <option>Sort by latest</option>
-        <option>Sort by price: low to high</option>
-        <option>Sort by price: high to low</option>
+      <select 
+        [value]="sortBy" 
+        (change)="onSortChange($any($event.target).value)"
+        class="border border-gray-300 rounded px-3 py-2"
+      >
+        <option value="latest">Sort by latest</option>
+        <option value="price-low-high">Sort by price: low to high</option>
+        <option value="price-high-low">Sort by price: high to low</option>
+        <option value="rating-low-high">Sort by rating: low to high</option>
+        <option value="rating-high-low">Sort by rating: high to low</option>
+        <option value="stock-low-high">Sort by stock: low to high</option>
+        <option value="stock-high-low">Sort by stock: high to low</option>
       </select>
     </div>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-      @for (product of filteredProducts; track product.id) {
-      <app-product-card [product]="product"></app-product-card>
+      @for (product of paginatedProducts; track product.id) {
+        <app-product-card [product]="product"></app-product-card>
       }@empty {
       <div class="col-span-3 text-center py-8">
         <p class="text-gray-500">No products found matching your filters</p>
@@ -28,10 +38,41 @@
     </div>
 
     <!-- Pagination -->
-    <div class="flex justify-center items-center mt-8 gap-2">
-      <button class="px-3 py-2 border border-gray-300 rounded hover:bg-gray-50">1</button>
-      <button class="px-3 py-2 border border-gray-300 rounded hover:bg-gray-50">2</button>
-      <button class="px-3 py-2 border border-gray-300 rounded hover:bg-gray-50">Next ></button>
-    </div>
+    @if (filteredProducts.length > 0) {
+      <div class="flex justify-center items-center mt-8 gap-2">
+        <!-- Previous Button -->
+        <button 
+          (click)="previousPage()" 
+          [disabled]="currentPage === 1"
+          class="px-3 py-2 border border-gray-300 rounded hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          Previous
+        </button>
+
+        <!-- Page Numbers -->
+        @for (page of getPageNumbers(); track page) {
+          <button 
+            (click)="goToPage(page)"
+            [class.bg-orange-300]="currentPage === page"
+            [class.text-black]="currentPage === page"
+            class="px-3 py-2 border border-gray-300 rounded hover:bg-gray-50"
+          >
+            {{ page }}
+          </button>
+        }
+
+        <!-- Next Button -->
+        <button 
+          (click)="nextPage()" 
+          [disabled]="currentPage === totalPages"
+          class="px-3 py-2 border border-gray-300 rounded hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          Next
+        </button>
+      </div>
+    }
+
+
+
   </div>
 </div>

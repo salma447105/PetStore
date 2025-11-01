@@ -12,8 +12,8 @@ import { ProductService } from '../../services/product';
 export class Filter implements OnInit {
   @Output() filterChange = new EventEmitter<any>();
 
-  categories: any[] = [];
   pets: any[] = [];
+  categories: any[] = [];
   priceRange = { min: 0, max: 500 };
   selectedCategories: number[] = [];
   selectedPets: number[] = [];
@@ -23,19 +23,25 @@ export class Filter implements OnInit {
   constructor(private productService: ProductService) {}
 
   ngOnInit() {
-    this.productService.getCategories().subscribe(categories => {
-      this.categories = categories;
-    });
 
     this.productService.getPets().subscribe(pets => {
       this.pets = pets;
     });
+
+    this.productService.getCategories().subscribe(categories => {
+      this.categories = categories;
+    });
+
   }
 
   onPetChange(petId: number, event: any) {
     if (event.target.checked) {
+      console.log(event.target.value);
+      console.log(this.selectedPets);
       this.selectedPets.push(petId);
-    } else {
+      console.log(this.selectedPets);
+    }
+    else {
       this.selectedPets = this.selectedPets.filter(id => id !== petId);
     }
   }
@@ -47,26 +53,31 @@ export class Filter implements OnInit {
       this.selectedCategories = this.selectedCategories.filter(id => id !== categoryId);
     }
   }
-
-  onRatingChange(rating: number) {
-    this.selectedRating = rating;
-  }
-
   onPriceChange() {
     // Ensure min is not greater than max
     if (this.priceRange.min > this.priceRange.max) {
+      const temp = this.priceRange.min;
       this.priceRange.min = this.priceRange.max;
+      this.priceRange.max = temp;
+
     }
   }
 
+  onRatingChange(rating: number) {
+    this.selectedRating = rating;
+    console.log(this.selectedRating);
+  }
+
+
   onAvailabilityChange(availability: string) {
     this.availabilityFilter = availability;
+    console.log(this.availabilityFilter);
   }
 
   applyFilters() {
     this.filterChange.emit({
-      categories: this.selectedCategories,
       pets: this.selectedPets,
+      categories: this.selectedCategories,
       priceRange: this.priceRange,
       rating: this.selectedRating,
       availability: this.availabilityFilter,
@@ -74,8 +85,8 @@ export class Filter implements OnInit {
   }
 
   clearFilters() {
-    this.selectedCategories = [];
     this.selectedPets = [];
+    this.selectedCategories = [];
     this.selectedRating = 0;
     this.priceRange = { min: 0, max: 500 };
     this.availabilityFilter = 'all';
@@ -98,8 +109,8 @@ export class Filter implements OnInit {
 
     // Emit cleared filters
     this.filterChange.emit({
-      categories: [],
       pets: [],
+      categories: [],
       priceRange: { min: 0, max: 500 },
       rating: 0,
       availability: 'all',

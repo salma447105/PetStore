@@ -54,4 +54,17 @@ getProductsByPet(petId: number): Observable<any[]> {
       })
     );
   }
+
+  getProductById(id: number): Observable<any> {
+  return this.http.get<any>(`${this.apiUrl}/products/${id}`).pipe(
+    catchError(error => {
+      console.error('Error fetching product:', error);
+      return of(null);
+    })
+  );
+}
+
+
+
+
 }
