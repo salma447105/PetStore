@@ -1,0 +1,142 @@
+<div class="bg-[rgb(248,249,250)] min-h-screen py-8">
+  <div class="container mx-auto px-4">
+    <div class="flex items-center justify-between mb-8">
+      <h1 class="text-3xl font-bold text-gray-900">Shopping Cart</h1>
+      <a routerLink="/shop" class="text-amber-600 hover:text-amber-700 flex items-center">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
+          <path fill-rule="evenodd" d="M9.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L7.414 9H15a1 1 0 110 2H7.414l2.293 2.293a1 1 0 010 1.414z" clip-rule="evenodd" />
+        </svg>
+        Continue Shopping
+      </a>
+    </div>
+
+    <!-- Loading State -->
+    @if (isLoading) {
+      <div class="flex justify-center items-center py-12">
+        <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-amber-600"></div>
+      </div>
+    }
+
+    <!-- Error Message -->
+    @if (error) {
+      <div class="bg-red-50 border-l-4 border-red-400 p-4 mb-4 rounded-r" role="alert">
+        <div class="flex items-center">
+          <div class="flex-shrink-0">
+            <svg class="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>
+            </svg>
+          </div>
+          <div class="ml-3">
+            <p class="text-sm text-red-700">{{ error }}</p>
+          </div>
+        </div>
+      </div>
+    }
+
+    @if (!isLoading && cartItems.length) {
+      <div class="grid lg:grid-cols-3 gap-8">
+        <!-- Items list -->
+        <div class="lg:col-span-2 space-y-6">
+          @for (item of cartItems; track item.id) {
+            <div class="bg-white rounded-xl shadow-sm p-6 flex flex-col md:flex-row items-start gap-6 transition-shadow hover:shadow-md">
+              <div class="w-full md:w-40 aspect-square rounded-lg overflow-hidden bg-gray-50">
+                <img [src]="item.image" [alt]="item.name" class="w-full h-full object-cover" />
+              </div>
+
+              <div class="flex-1 w-full">
+                <div class="flex justify-between items-start">
+                  <div>
+                    <h3 class="text-xl font-bold text-gray-900">{{ item.name }}</h3>
+                    <p class="text-gray-600 mt-1">{{ item.description }}</p>
+                  </div>
+                  <button (click)="remove(item)" class="text-gray-400 hover:text-red-500 transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                      <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+                    </svg>
+                  </button>
+                </div>
+
+                <div class="mt-4 flex flex-wrap items-center gap-4">
+                  <div class="flex items-center border border-gray-200 rounded-lg overflow-hidden">
+                    <button 
+                      (click)="decrease(item)" 
+                      class="px-3 py-2 bg-gray-50 hover:bg-gray-100 transition-colors text-gray-600 hover:text-gray-900">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd" />
+                      </svg>
+                    </button>
+                    <div class="px-4 py-2 text-gray-900 font-medium">{{ item.qty }}</div>
+                    <button 
+                      (click)="increase(item)" 
+                      class="px-3 py-2 bg-gray-50 hover:bg-gray-100 transition-colors text-gray-600 hover:text-gray-900">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd" />
+                      </svg>
+                    </button>
+                  </div>
+                  <div class="text-xl font-bold text-gray-900">${{ (item.price * item.qty) | number:'1.2-2' }}</div>
+                </div>
+              </div>
+            </div>
+          }
+        </div>
+
+        <!-- Summary -->
+        <aside class="bg-white rounded-xl shadow-sm p-6 h-fit">
+          <h2 class="text-2xl font-bold text-gray-900 mb-6">Order Summary</h2>
+
+          <div class="space-y-4 mb-6">
+            <div class="flex justify-between text-gray-600">
+              <span>Items ({{ getItemsCount() }})</span>
+              <span class="font-medium">${{ total | number:'1.2-2' }}</span>
+            </div>
+            <div class="flex justify-between text-gray-600">
+              <span>Shipping</span>
+              <span class="font-medium text-green-600">Free</span>
+            </div>
+            <div class="border-t border-gray-200 pt-4">
+              <div class="flex justify-between">
+                <span class="text-lg font-bold text-gray-900">Total</span>
+                <span class="text-lg font-bold text-gray-900">${{ total | number:'1.2-2' }}</span>
+              </div>
+            </div>
+          </div>
+
+          <button 
+            (click)="checkout()" 
+            [disabled]="isCheckingOut"
+            class="w-full bg-amber-500 hover:bg-amber-600 disabled:bg-amber-300 text-white px-6 py-3 rounded-lg transition-colors font-medium relative">
+            @if (!isCheckingOut) {
+              <span class="flex items-center justify-center gap-2">
+                Proceed to Checkout
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                </svg>
+              </span>
+            } @else {
+              <div class="absolute inset-0 flex items-center justify-center">
+                <div class="animate-spin rounded-full h-6 w-6 border-b-2 border-white"></div>
+              </div>
+            }
+          </button>
+        </aside>
+      </div>
+    } @else {
+      <div class="bg-white rounded-xl shadow-sm p-12 text-center max-w-2xl mx-auto">
+        <div class="mb-6">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-gray-400 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+          </svg>
+        </div>
+        <h2 class="text-2xl font-bold text-gray-900 mb-4">Your cart is empty</h2>
+        <p class="text-gray-600 mb-8">Looks like you haven't added anything to your cart yet.</p>
+        <a routerLink="/shop" 
+           class="inline-flex items-center px-6 py-3 bg-amber-500 hover:bg-amber-600 text-white font-medium rounded-lg transition-colors">
+          Start Shopping
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+          </svg>
+        </a>
+      </div>
+    }
+</div>
