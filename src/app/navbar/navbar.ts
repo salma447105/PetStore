@@ -3,7 +3,7 @@ import { Router, RouterModule } from '@angular/router';
 import { CommonModule, AsyncPipe, NgFor } from '@angular/common';
 import { FavoritesService } from '../services/favorites';
 import { ProductService } from '../services/product';
-
+import { CartService } from '../services/cart/cart.service';
 @Component({
   selector: 'app-navbar',
   standalone: true,
@@ -16,7 +16,7 @@ export class Navbar implements OnInit {
   products = signal<any[]>([]);
   searchTerm = signal('');
   activeIndex = signal(-1);
-
+  cartItemCount = computed(() => this.cartService.getItemCount());
   filteredProducts = computed(() => {
     const term = this.searchTerm().toLowerCase();
     return this.products().filter(p => p.name.toLowerCase().includes(term));
@@ -25,7 +25,7 @@ export class Navbar implements OnInit {
   private favoritesService = inject(FavoritesService);
   private productService = inject(ProductService);
   private router = inject(Router);
-
+  private cartService = inject(CartService);
   ngOnInit() {
     this.favoritesCount.set(this.favoritesService.getFavoritesCount());
     this.favoritesService.getFavoritesObservable().subscribe(favs => {

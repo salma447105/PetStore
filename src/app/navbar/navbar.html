@@ -140,11 +140,15 @@
               d="M2.25 3h1.386c.51 0 .955.343 1.086.835l.383 1.437m0 0l1.358 5.094a2.25 2.25 0 002.187 1.684h7.426a2.25 2.25 0 002.187-1.684l1.358-5.094m-14.579 0h14.579m-9.579 11.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm6 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z"
             />
           </svg>
-          <span
-            class="absolute -top-1 -right-2 bg-amber-600 text-white text-xs font-semibold rounded-full w-4 h-4 flex items-center justify-center"
-            >3</span
-          >
         </a>
+
+        @if (cartItemCount() > 0) {
+          <span
+            class="absolute -top-1 -right-2 bg-amber-600 text-white text-xs font-semibold rounded-full w-4 h-4 flex items-center group-hover:bg-amber-900 justify-center"
+          >
+            {{ cartItemCount() }}
+          </span>
+        }
       </div>
 
       <div class="flex gap-3">

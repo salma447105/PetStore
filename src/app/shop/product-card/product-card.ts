@@ -2,7 +2,20 @@ import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { FavoritesService } from '../../services/favorites';
-import { ToastService } from '../../services/toast'; 
+import { ToastService } from '../../services/toast';
+import { CartService } from '../../services/cart/cart.service';
+import { AuthService } from '../../services/auth/auth.service';
+
+interface Product {
+  id: number;
+  name: string;
+  description?: string;
+  shortDesc?: string;
+  price: number;
+  image?: string;
+  numberInStock: number;
+  rating: number;
+}
 
 @Component({
   selector: 'app-product-card',
@@ -18,7 +31,9 @@ export class ProductCard implements OnInit {
   constructor(
     private router: Router,
     private favoritesService: FavoritesService,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private cartService: CartService,
+    private authService: AuthService
   ) {}
 
   ngOnInit() {
@@ -61,27 +76,35 @@ export class ProductCard implements OnInit {
 
   }
 
-  addToCart(event: Event) {
-    // Prevent navigation when clicking add to cart
-     event.stopPropagation();
-    // Add to cart functionality
-    let cart = JSON.parse(localStorage.getItem('cart') || '[]');
-    const existingItem = cart.find((item: any) => item.id === this.product.id);
+  async addToCart(event: Event) {
+    event.stopPropagation(); // Prevent navigation
     
-    if (existingItem) {
-      existingItem.quantity += 1;
-    } else {
-      cart.push({
-        ...this.product,
-        quantity: 1
+    try {
+      // Check if user is logged in
+      const user = await this.authService.getCurrentUser();
+      if (!user) {
+        this.toastService.show('Please log in to add items to cart', 'error');
+        this.router.navigate(['/login']);
+        return;
+      }
+
+      if (this.product.numberInStock <= 0) {
+        this.toastService.show('Sorry, this item is out of stock', 'error');
+        return;
+      }
+
+      await this.cartService.addToCart({
+        id: this.product.id,
+        name: this.product.name,
+        description: this.product.description,
+        price: this.product.price,
+        image: this.product.image
       });
+      
+      this.toastService.show('Added to cart successfully!', 'success');
+    } catch (error) {
+      console.error('Error adding to cart:', error);
+      this.toastService.show('Failed to add item to cart', 'error');
     }
-    
-    localStorage.setItem('cart', JSON.stringify(cart));
-    console.log('Added to cart:', this.product.name);
-
-    this.toastService.show('Product added to cart!', 'success');
-    console.log('Added to cart:', this.product.name);
-
   }
 }
