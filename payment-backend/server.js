@@ -27,6 +27,14 @@ app.use(cors({
 // Parse JSON bodies
 app.use(express.json())
 
+app.get('/', (req, res) => {
+    res.json({ 
+        message: 'Stripe backend server is running',
+        status: 'OK',
+        timestamp: new Date().toISOString(),
+        client: CLIENT_URL
+    });
+}); 
 app.post('/create-checkout-session', async (req, res) => {
     try {
         const { items } = req.body;
