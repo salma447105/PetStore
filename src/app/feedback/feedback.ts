@@ -1,8 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { FeedbackService } from '../services/feedback.service';
-import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-feedback',
@@ -10,46 +8,36 @@ import { ActivatedRoute } from '@angular/router';
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './feedback.html'
 })
-export class FeedbackComponent implements OnInit {
+export class FeedbackComponent {
+  // Form controls
   comment = new FormControl('');
   rating = new FormControl('');
-  sessionId: string | null = null;
 
-  constructor(
-    private feedbackService: FeedbackService,
-    private route: ActivatedRoute
-  ) {}
-
-  ngOnInit() {
-    // Get the session_id from URL parameters
-    this.route.queryParams.subscribe(params => {
-      this.sessionId = params['session_id'];
-      if (this.sessionId) {
-        console.log('Payment session ID:', this.sessionId);
-      }
-    });
-  }
+  // Alert state
+  alertMessage: string = '';
+  alertType: 'success' | 'error' = 'success';
+  showAlert: boolean = false;
 
   submitFeedback() {
-    const feedback = {
-      comment: this.comment.value!,
-      rating: Number(this.rating.value),
-      createdAt: new Date().toISOString(),
-      sessionId: this.sessionId
-    };
-
-    if (!feedback.comment || !feedback.rating) {
-      alert('Please fill out both fields.');
+    const commentVal = this.comment.value;
+    const ratingVal = this.rating.value;
+    if (!commentVal || !ratingVal) {
+      this.showStyledAlert('Please fill out both fields.', 'error');
       return;
     }
+    this.showStyledAlert('Thanks for your feedback!', 'success');
 
-    this.feedbackService.submit(feedback).subscribe({
-      next: () => {
-        alert('Thanks for your feedback!');
-        this.comment.reset();
-        this.rating.reset();
-      },
-      error: () => alert('Failed to submit feedback. Please try again.')
-    });
+    this.comment.reset();
+    this.rating.reset();
+  }
+
+  showStyledAlert(message: string, type: 'success' | 'error') {
+    this.alertMessage = message;
+    this.alertType = type;
+    this.showAlert = true;
+
+    setTimeout(() => {
+      this.showAlert = false;
+    }, 4000);
   }
 }
