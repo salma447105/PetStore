@@ -10,6 +10,7 @@ import { ProductService } from '../services/product';
   imports: [RouterModule, CommonModule, NgFor, AsyncPipe],
   templateUrl: './navbar.html',
   styleUrls: ['./navbar.css']
+  styleUrls: ['./navbar.css']
 })
 export class Navbar implements OnInit {
   favoritesCount = signal(0);
