@@ -5,7 +5,8 @@
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
       <div
         *ngFor="let product of products"
-        class="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition-transform hover:scale-105"
+        (click)="goToProduct(product.id)"
+        class="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition-transform hover:scale-105 cursor-pointer"
       >
         <img [src]="product.image" [alt]="product.name" class="w-full h-56 object-cover" />
         <div class="p-4">

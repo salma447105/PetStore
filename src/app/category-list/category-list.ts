@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ProductService } from '../services/product';
 
 @Component({
@@ -14,7 +14,9 @@ export class CategoryListComponent implements OnInit {
   categoryId!: number;
   categoryName = '';
 
-  constructor(private route: ActivatedRoute, private productService: ProductService) {}
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private productService = inject(ProductService);
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
@@ -30,5 +32,9 @@ export class CategoryListComponent implements OnInit {
         this.categoryName = data[0].categoryName || 'Category';
       }
     });
+  }
+
+  goToProduct(productId: number): void {
+    this.router.navigate(['/product', productId]);
   }
 }
