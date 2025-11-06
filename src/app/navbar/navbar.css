@@ -16,3 +16,10 @@
     transform: translateY(0);
   }
 }
+
+/* Mobile menu animations */
+@media (max-width: 768px) {
+  ul {
+    animation: slideDown 0.3s ease-out;
+  }
+}

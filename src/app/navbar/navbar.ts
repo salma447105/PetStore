@@ -30,6 +30,9 @@ export class Navbar implements OnInit {
   // Dropdown
   isDropdownOpen = signal(false);
   
+  // Mobile Menu
+  isMobileMenuOpen = signal(false);
+  
   // Computed signals
   favoritesCount = signal(0);
   cartItemCount = computed(() => this.cartService.getItemCount());
@@ -142,9 +145,19 @@ export class Navbar implements OnInit {
 
   async logout() {
     this.closeDropdown();
+    this.closeMobileMenu();
     const success = await this.authService.logout();
     if (success) {
       this.router.navigate(['/home']);
     }
+  }
+
+  // Mobile menu methods
+  toggleMobileMenu() {
+    this.isMobileMenuOpen.update(open => !open);
+  }
+
+  closeMobileMenu() {
+    this.isMobileMenuOpen.set(false);
   }
 }
