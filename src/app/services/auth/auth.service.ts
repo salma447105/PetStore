@@ -12,7 +12,6 @@ export class AuthService {
   private role: string = 'user';
 
   constructor() {
-    // watch auth state
     onAuthStateChanged(this.auth, async user => {
       console.log(user, "onAuthStateChanged");
 
@@ -24,12 +23,15 @@ export class AuthService {
           const userData = snapshot.data();
           (user as any).role = userData['role'];
           this.user.set(user);
-          console.log(user);
-
+          console.log('User set in service:', user);
         }
         else {
           this.user.set(null);
         }
+      } else {
+        // Important: Clear user when logged out
+        this.user.set(null);
+        console.log('User cleared in service');
       }
     });
   }
@@ -54,7 +56,6 @@ export class AuthService {
       console.log(res, "service sign-up");
 
       await updateProfile(res.user, { displayName: fullName });
-      this.user.set(res.user);
 
       if (res.user.email) {
         const isAdmin = this.adminEmails.includes(res.user.email);
@@ -69,6 +70,10 @@ export class AuthService {
         provider: 'password'
       });
 
+      // Update user with role
+      (res.user as any).role = this.role;
+      this.user.set(res.user);
+
       return res;
     }
     catch (err: any) {
@@ -82,7 +87,6 @@ export class AuthService {
     try {
       const res = await signInWithEmailAndPassword(this.auth, email, password);
       console.log(res, "success login");
-      this.user.set(res.user);
       return res;
     }
     catch (err: any) {
@@ -96,7 +100,6 @@ export class AuthService {
     try {
       const provider = new GoogleAuthProvider();
       const res = await signInWithPopup(this.auth, provider);
-      this.user.set(res.user);
 
       const docRef = doc(this.db, 'users', res.user.uid);
       const snapshot = await getDoc(docRef);
@@ -131,7 +134,6 @@ export class AuthService {
     try {
       const provider = new FacebookAuthProvider();
       const res = await signInWithPopup(this.auth, provider);
-      this.user.set(res.user);
 
       const docRef = doc(this.db, 'users', res.user.uid);
       const snapshot = await getDoc(docRef);
@@ -142,7 +144,6 @@ export class AuthService {
         const isAdmin = this.adminEmails.includes(res.user.email);
         if (isAdmin) this.role = 'admin';
       }
-
 
       if (!snapshot.exists()) {
         await setDoc(docRef, {
@@ -167,7 +168,6 @@ export class AuthService {
     try {
       const provider = new TwitterAuthProvider();
       const res = await signInWithPopup(this.auth, provider);
-      this.user.set(res.user);
 
       const docRef = doc(this.db, 'users', res.user.uid);
       const snapshot = await getDoc(docRef);
@@ -212,6 +212,8 @@ export class AuthService {
   async logout() {
     try {
       await signOut(this.auth);
+      this.role = 'user'; 
+      console.log('Logged out successfully');
       return true;
     }
     catch (err: any) {

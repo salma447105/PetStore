@@ -1,66 +1,48 @@
-<div class="bg-gray-50 font-bold shadow-md">
+<div class="bg-[rgb(248,249,250)] font-bold">
   <div
-    class="container mx-auto bg-amber-200/90 shadow-md rounded-3xl py-4 px-6 my-5 flex flex-col md:flex-row justify-between items-center gap-4 md:gap-0"
+    class="container mx-auto bg-amber-200 rounded-3xl py-2 px-4 my-5 flex justify-evenly items-center"
   >
-    <!-- Logo -->
-    <div class="w-full md:w-1/6 text-center md:text-left">
-      <a
-        routerLink="/home"
-        routerLinkActive="font-bold underline text-amber-900"
-        class="text-2xl md:text-3xl tracking-wide"
-      >
-        Paw Planet
+    <div class="w-1/6 text-center">
+      <a class="nav-link text-xl" routerLink="/home">
+        <span class="me-2"></span>🐾Paw Planet
       </a>
     </div>
 
     <!-- Navigation Links -->
-    <ul
-      class="flex flex-col md:flex-row justify-center md:justify-evenly w-full md:w-2/6 items-center gap-3 md:gap-8"
-    >
+    <ul class="flex justify-evenly w-2/6 items-center">
       <li>
-        <a
-          routerLink="/home"
-          routerLinkActive="underline text-amber-900"
-          class="transition hover:text-amber-800"
-          >Home</a
-        >
+        <a routerLink="/home" routerLinkActive="active-link" class="font-medium transition cursor-pointer">
+          Home
+        </a>
       </li>
       <li>
-        <a
-          routerLink="/shop"
-          routerLinkActive="underline text-amber-900"
-          class="transition hover:text-amber-800"
-          >Shop</a
-        >
+        <a routerLink="/shop" routerLinkActive="active-link" class="font-medium transition cursor-pointer">
+          Shop
+        </a>
       </li>
       <li>
-        <a
-          routerLink="/about"
-          routerLinkActive="underline text-amber-900"
-          class="transition hover:text-amber-800"
-          >About Us</a
-        >
+        <a routerLink="/about" routerLinkActive="active-link" class="font-medium transition cursor-pointer">
+          About Us
+        </a>
       </li>
       <li>
-        <a
-          routerLink="/contacts"
-          routerLinkActive="underline text-amber-900"
-          class="transition hover:text-amber-800"
-          >Contact Us</a
-        >
+        <a routerLink="/contacts" routerLinkActive="active-link" class="font-medium transition cursor-pointer">
+          Contact Us
+        </a>
       </li>
     </ul>
-    <div
-      class="flex flex-col md:flex-row justify-center md:justify-evenly items-center w-full md:w-2/6 gap-3 md:gap-4"
-    >
-      <div class="relative w-full md:w-64">
+
+    <!-- Search & Icons -->
+    <div class="flex justify-evenly items-center w-2/6 gap-3">
+      <!-- Search Box -->
+      <div class="relative w-64">
         <input
           type="text"
           placeholder="Search Products..."
           [value]="searchTerm()"
-          (input)="onSearchChange($event.target.value)"
+          (input)="onSearchChange($event)"
           (keydown)="onKeyDown($event)"
-          class="w-full pr-10 pl-4 py-2 rounded-3xl border-none bg-gray-100 focus:outline-none focus:ring-2 focus:ring-amber-500 shadow-sm"
+          class="w-full pr-10 pl-4 py-2 rounded-3xl border-none bg-[rgb(248,249,250)] focus:outline-none focus:ring-2 focus:ring-amber-500"
         />
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -77,38 +59,39 @@
           />
         </svg>
 
-        <div
-          *ngIf="searchTerm() && filteredProducts().length"
-          class="absolute mt-1 w-full bg-white border border-gray-300 rounded-lg shadow-lg max-h-60 overflow-y-auto z-50"
-        >
+        <!-- Search Dropdown -->
+        @if (searchTerm() && filteredProducts().length) {
+        <div class="absolute mt-1 w-full bg-white border border-gray-300 rounded-lg shadow-lg max-h-60 overflow-y-auto z-50">
+          @for (product of filteredProducts(); track product.id; let i = $index) {
           <div
-            *ngFor="let product of filteredProducts(); let i = index"
             (click)="goToProduct(product.id)"
             [class.bg-amber-100]="activeIndex() === i"
-            class="p-2 hover:bg-amber-100 cursor-pointer"
+            class="p-2 hover:bg-amber-100 cursor-pointer transition"
           >
             {{ product.name }}
           </div>
+          }
         </div>
+        }
 
-        <div
-          *ngIf="searchTerm() && !filteredProducts().length"
-          class="absolute mt-1 w-full bg-white border border-gray-300 rounded-lg shadow-lg p-2 text-gray-500 z-50"
-        >
+        @if (searchTerm() && !filteredProducts().length) {
+        <div class="absolute mt-1 w-full bg-white border border-gray-300 rounded-lg shadow-lg p-2 text-gray-500 z-50">
           No products found.
         </div>
+        }
       </div>
 
-      <!-- Favorites -->
-      <div class="relative">
-        <a routerLink="/favorites" routerLinkActive="text-amber-900">
+      <!-- Favorites Icon (Only when logged in) -->
+      @if (isLoggedIn()) {
+      <div class="relative group">
+        <a class="nav-link cursor-pointer" routerLink="/favorites">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
             stroke-width="1.5"
             stroke="currentColor"
-            class="w-6 h-6 hover:text-red-500 transition"
+            class="w-6 h-6 group-hover:text-red-500 transition"
           >
             <path
               stroke-linecap="round"
@@ -116,23 +99,29 @@
               d="M21 8.25c0-2.485-2.239-4.5-5-4.5-1.657 0-3.156.895-4 2.236A4.497 4.497 0 008 3.75C5.239 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
             />
           </svg>
-          <span
-            *ngIf="favoritesCount()"
-            class="absolute -top-1 -right-2 bg-amber-600 text-white text-xs font-semibold rounded-full w-4 h-4 flex items-center justify-center"
-          >
-            {{ favoritesCount() }}
-          </span>
         </a>
+
+        @if (favoritesCount() > 0) {
+        <span
+          class="absolute -top-1 -right-2 bg-amber-600 text-white text-xs font-semibold rounded-full w-5 h-5 flex items-center justify-center group-hover:bg-amber-900 transition"
+        >
+          {{ favoritesCount() }}
+        </span>
+        }
       </div>
-      <div class="relative">
-        <a routerLink="/cart" routerLinkActive="text-amber-900">
+      }
+
+      <!-- Cart Icon (Only when logged in) -->
+      @if (isLoggedIn()) {
+      <div class="relative group">
+        <a class="nav-link cursor-pointer" routerLink="/cart">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
             stroke-width="1.5"
             stroke="currentColor"
-            class="w-6 h-6 hover:text-amber-700 transition"
+            class="w-6 h-6 hover:text-amber-500 transition"
           >
             <path
               stroke-linecap="round"
@@ -143,28 +132,96 @@
         </a>
 
         @if (cartItemCount() > 0) {
-          <span
-            class="absolute -top-1 -right-2 bg-amber-600 text-white text-xs font-semibold rounded-full w-4 h-4 flex items-center group-hover:bg-amber-900 justify-center"
-          >
-            {{ cartItemCount() }}
-          </span>
+        <span
+          class="absolute -top-1 -right-2 bg-amber-600 text-white text-xs font-semibold rounded-full w-5 h-5 flex items-center group-hover:bg-amber-900 justify-center transition"
+        >
+          {{ cartItemCount() }}
+        </span>
         }
       </div>
+      }
 
-      <div class="flex gap-3">
-        <a
-          routerLink="/login"
-          routerLinkActive="text-amber-900"
-          class="transition hover:text-amber-800"
-          >Login</a
+      <!-- Login Button (Only when NOT logged in) -->
+      @if (!isLoggedIn()) {
+      <a
+        routerLink="/login"
+        routerLinkActive="active-link"
+        class="font-medium transition hover:text-amber-700 cursor-pointer"
+      >
+        Login
+      </a>
+      }
+
+      <!-- User Dropdown (Only when logged in) -->
+      @if (isLoggedIn()) {
+      <div class="relative" clickOutside (clickOutside)="closeDropdown()">
+        <button
+          (click)="toggleDropdown()"
+          class="w-10 h-10 rounded-full bg-amber-600 text-white font-bold flex items-center justify-center hover:bg-amber-700 transition focus:outline-none focus:ring-2 focus:ring-amber-500"
+          [title]="getUserName()"
         >
-        <a
-          routerLink="/dashboard"
-          routerLinkActive="text-amber-900"
-          class="transition hover:text-amber-800"
-          >Dashboard</a
+          {{ getInitials() }}
+        </button>
+
+        @if (isDropdownOpen()) {
+        <div
+          class="absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-xl py-1 z-50 border border-gray-200 dropdown-enter"
         >
+          <div class="px-4 py-3 border-b border-gray-200">
+            <p class="text-sm font-semibold text-gray-800 truncate">
+              {{ getUserName() }}
+            </p>
+            <p class="text-xs text-gray-500 truncate">{{ getUserEmail() }}</p>
+          </div>
+          
+          @if (isAdmin()) {
+          <a
+            routerLink="/dashboard"
+            (click)="closeDropdown()"
+            class="w-full text-left px-4 py-2.5 text-sm text-gray-700 hover:bg-amber-50 transition flex items-center gap-2 cursor-pointer"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="w-5 h-5"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M9 17.25v1.007a3 3 0 01-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0115 18.257V17.25m6-12V15a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 15V5.25m18 0A2.25 2.25 0 0018.75 3H5.25A2.25 2.25 0 003 5.25m18 0V12a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 12V5.25"
+              />
+            </svg>
+            Dashboard
+          </a>
+          }
+
+          <button
+            (click)="logout()"
+            class="w-full text-left px-4 py-2.5 text-sm text-gray-700 hover:bg-amber-50 transition flex items-center gap-2"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="w-5 h-5"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9"
+              />
+            </svg>
+            Logout
+          </button>
+        </div>
+        }
       </div>
+      }
     </div>
   </div>
 </div>
