@@ -1,127 +1,109 @@
 <div class="bg-[rgb(248,249,250)] font-bold">
   <div
-    class="container mx-auto bg-amber-200 rounded-3xl py-3 px-4 md:py-2 md:px-4 my-5 flex flex-col md:flex-row justify-between md:justify-evenly items-center gap-4 md:gap-0"
+    class="container mx-auto bg-amber-200 rounded-3xl py-3 px-4 md:py-2 md:px-4 my-5"
   >
-    <!-- Logo & Mobile Menu Button -->
-    <div class="w-full md:w-1/6 flex justify-between items-center">
-      <a class="nav-link text-xl md:text-2xl" routerLink="/home">
-        <span class="me-2"></span>🐾Paw Planet
-      </a>
-      
-      <!-- Mobile Menu Toggle -->
-      <button 
-        (click)="toggleMobileMenu()"
-        class="md:hidden w-8 h-8 flex flex-col justify-center items-center gap-1.5 focus:outline-none"
-        aria-label="Toggle menu"
-      >
-        <span class="w-6 h-0.5 bg-gray-800 transition-all" [class.rotate-45]="isMobileMenuOpen()" [class.translate-y-2]="isMobileMenuOpen()"></span>
-        <span class="w-6 h-0.5 bg-gray-800 transition-all" [class.opacity-0]="isMobileMenuOpen()"></span>
-        <span class="w-6 h-0.5 bg-gray-800 transition-all" [class.-rotate-45]="isMobileMenuOpen()" [class.-translate-y-2]="isMobileMenuOpen()"></span>
-      </button>
-    </div>
+    <!-- Desktop Layout -->
+    <div class="hidden md:flex justify-evenly items-center">
+      <!-- Logo -->
+      <div class="w-1/6 text-center">
+        <a class="nav-link text-xl lg:text-2xl" routerLink="/home">
+          <span class="me-2"></span>🐾Paw Planet
+        </a>
+      </div>
 
-    <!-- Navigation Links (Mobile Collapsible) -->
-    <ul
-      [class.hidden]="!isMobileMenuOpen()"
-      class="flex flex-col md:flex-row justify-center md:justify-evenly w-full md:w-2/6 items-center gap-3 md:gap-4 lg:gap-6 order-3 md:order-2"
-    >
-      <li>
-        <a 
-          routerLink="/home" 
-          routerLinkActive="active-link" 
-          class="font-medium transition cursor-pointer hover:text-amber-700"
-          (click)="closeMobileMenu()"
-        >
-          Home
-        </a>
-      </li>
-      <li>
-        <a 
-          routerLink="/shop" 
-          routerLinkActive="active-link" 
-          class="font-medium transition cursor-pointer hover:text-amber-700"
-          (click)="closeMobileMenu()"
-        >
-          Shop
-        </a>
-      </li>
-      <li>
-        <a 
-          routerLink="/about" 
-          routerLinkActive="active-link" 
-          class="font-medium transition cursor-pointer hover:text-amber-700"
-          (click)="closeMobileMenu()"
-        >
-          About Us
-        </a>
-      </li>
-      <li>
-        <a 
-          routerLink="/contacts" 
-          routerLinkActive="active-link" 
-          class="font-medium transition cursor-pointer hover:text-amber-700"
-          (click)="closeMobileMenu()"
-        >
-          Contact Us
-        </a>
-      </li>
-    </ul>
-
-    <!-- Search & Icons -->
-    <div class="flex flex-col md:flex-row justify-center md:justify-evenly items-center w-full md:w-2/6 gap-3 md:gap-3 lg:gap-4 order-2 md:order-3">
-      <!-- Search Box -->
-      <div class="relative w-full md:w-48 lg:w-64">
-        <input
-          type="text"
-          placeholder="Search Products..."
-          [value]="searchTerm()"
-          (input)="onSearchChange($event)"
-          (keydown)="onKeyDown($event)"
-          class="w-full pr-10 pl-4 py-2 rounded-3xl border-none bg-[rgb(248,249,250)] focus:outline-none focus:ring-2 focus:ring-amber-500 text-sm"
-        />
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          class="w-5 h-5 absolute right-3 top-2.5 text-gray-400"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 104.5 4.5a7.5 7.5 0 0012.15 12.15z"
-          />
-        </svg>
-
-        <!-- Search Dropdown -->
-        @if (searchTerm() && filteredProducts().length) {
-        <div class="absolute mt-1 w-full bg-white border border-gray-300 rounded-lg shadow-lg max-h-60 overflow-y-auto z-50">
-          @for (product of filteredProducts(); track product.id; let i = $index) {
-          <div
-            (click)="goToProduct(product.id)"
-            [class.bg-amber-100]="activeIndex() === i"
-            class="p-2 hover:bg-amber-100 cursor-pointer transition text-sm"
+      <!-- Navigation Links -->
+      <ul class="flex justify-evenly w-2/6 items-center gap-4 lg:gap-6">
+        <li>
+          <a 
+            routerLink="/home" 
+            routerLinkActive="active-link" 
+            class="font-medium transition cursor-pointer hover:text-amber-700"
           >
-            {{ product.name }}
+            Home
+          </a>
+        </li>
+        <li>
+          <a 
+            routerLink="/shop" 
+            routerLinkActive="active-link" 
+            class="font-medium transition cursor-pointer hover:text-amber-700"
+          >
+            Shop
+          </a>
+        </li>
+        <li>
+          <a 
+            routerLink="/about" 
+            routerLinkActive="active-link" 
+            class="font-medium transition cursor-pointer hover:text-amber-700"
+          >
+            About Us
+          </a>
+        </li>
+        <li>
+          <a 
+            routerLink="/contacts" 
+            routerLinkActive="active-link" 
+            class="font-medium transition cursor-pointer hover:text-amber-700"
+          >
+            Contact Us
+          </a>
+        </li>
+      </ul>
+
+      <!-- Search & Icons -->
+      <div class="flex justify-evenly items-center w-2/6 gap-3 lg:gap-4">
+        <!-- Search Box -->
+        <div class="relative w-48 lg:w-64">
+          <input
+            type="text"
+            placeholder="Search Products..."
+            [value]="searchTerm()"
+            (input)="onSearchChange($event)"
+            (keydown)="onKeyDown($event)"
+            class="w-full pr-10 pl-4 py-2 rounded-3xl border-none bg-[rgb(248,249,250)] focus:outline-none focus:ring-2 focus:ring-amber-500 text-sm"
+          />
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="w-5 h-5 absolute right-3 top-2.5 text-gray-400"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 104.5 4.5a7.5 7.5 0 0012.15 12.15z"
+            />
+          </svg>
+
+          <!-- Search Dropdown -->
+          @if (searchTerm() && filteredProducts().length) {
+          <div class="absolute mt-1 w-full bg-white border border-gray-300 rounded-lg shadow-lg max-h-60 overflow-y-auto z-50">
+            @for (product of filteredProducts(); track product.id; let i = $index) {
+            <div
+              (click)="goToProduct(product.id)"
+              [class.bg-amber-100]="activeIndex() === i"
+              class="p-2 hover:bg-amber-100 cursor-pointer transition text-sm"
+            >
+              {{ product.name }}
+            </div>
+            }
+          </div>
+          }
+
+          @if (searchTerm() && !filteredProducts().length) {
+          <div class="absolute mt-1 w-full bg-white border border-gray-300 rounded-lg shadow-lg p-2 text-gray-500 z-50 text-sm">
+            No products found.
           </div>
           }
         </div>
-        }
 
-        @if (searchTerm() && !filteredProducts().length) {
-        <div class="absolute mt-1 w-full bg-white border border-gray-300 rounded-lg shadow-lg p-2 text-gray-500 z-50 text-sm">
-          No products found.
-        </div>
-        }
-      </div>
-
-      <!-- Icons Container -->
-      <div class="flex items-center gap-4 md:gap-3 lg:gap-4">
         <!-- Favorites Icon (Only when logged in) -->
         @if (isLoggedIn()) {
         <div class="relative group">
-          <a class="nav-link cursor-pointer" routerLink="/favorites" (click)="closeMobileMenu()">
+          <a class="nav-link cursor-pointer" routerLink="/favorites">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -151,7 +133,7 @@
         <!-- Cart Icon (Only when logged in) -->
         @if (isLoggedIn()) {
         <div class="relative group">
-          <a class="nav-link cursor-pointer" routerLink="/cart" (click)="closeMobileMenu()">
+          <a class="nav-link cursor-pointer" routerLink="/cart">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -183,8 +165,7 @@
         <a
           routerLink="/login"
           routerLinkActive="active-link"
-          class="font-medium transition hover:text-amber-700 cursor-pointer text-sm md:text-base"
-          (click)="closeMobileMenu()"
+          class="font-medium transition hover:text-amber-700 cursor-pointer"
         >
           Login
         </a>
@@ -195,7 +176,7 @@
         <div class="relative" clickOutside (clickOutside)="closeDropdown()">
           <button
             (click)="toggleDropdown()"
-            class="w-9 h-9 md:w-10 md:h-10 rounded-full bg-amber-600 text-white font-bold flex items-center justify-center hover:bg-amber-700 transition focus:outline-none focus:ring-2 focus:ring-amber-500 text-sm md:text-base"
+            class="w-10 h-10 rounded-full bg-amber-600 text-white font-bold flex items-center justify-center hover:bg-amber-700 transition focus:outline-none focus:ring-2 focus:ring-amber-500"
             [title]="getUserName()"
           >
             {{ getInitials() }}
@@ -215,7 +196,7 @@
             @if (isAdmin()) {
             <a
               routerLink="/dashboard"
-              (click)="closeDropdown(); closeMobileMenu()"
+              (click)="closeDropdown()"
               class="w-full text-left px-4 py-2.5 text-sm text-gray-700 hover:bg-amber-50 transition flex items-center gap-2 cursor-pointer"
             >
               <svg
@@ -237,7 +218,7 @@
             }
 
             <button
-              (click)="logout(); closeMobileMenu()"
+              (click)="logout()"
               class="w-full text-left px-4 py-2.5 text-sm text-gray-700 hover:bg-amber-50 transition flex items-center gap-2"
             >
               <svg
@@ -261,6 +242,280 @@
         </div>
         }
       </div>
+    </div>
+
+    <!-- Mobile Layout -->
+    <div class="md:hidden">
+      <!-- Mobile Header -->
+      <div class="flex justify-between items-center">
+        <a class="nav-link text-xl" routerLink="/home">
+          <span class="me-2"></span>🐾Paw Planet
+        </a>
+        
+        <!-- Mobile Menu Toggle -->
+        <button 
+          (click)="toggleMobileMenu()"
+          class="w-8 h-8 flex flex-col justify-center items-center gap-1.5 focus:outline-none"
+          aria-label="Toggle menu"
+        >
+          <span 
+            class="w-6 h-0.5 bg-gray-800 transition-all duration-300"
+            [class.rotate-45]="isMobileMenuOpen()" 
+            [class.translate-y-2]="isMobileMenuOpen()"
+          ></span>
+          <span 
+            class="w-6 h-0.5 bg-gray-800 transition-all duration-300"
+            [class.opacity-0]="isMobileMenuOpen()"
+          ></span>
+          <span 
+            class="w-6 h-0.5 bg-gray-800 transition-all duration-300"
+            [class.-rotate-45]="isMobileMenuOpen()" 
+            [class.-translate-y-2]="isMobileMenuOpen()"
+          ></span>
+        </button>
+      </div>
+
+      <!-- Mobile Menu Content -->
+      @if (isMobileMenuOpen()) {
+      <div class="mt-4 space-y-4 mobile-menu-enter">
+        <!-- Search Box Mobile -->
+        <div class="relative w-full">
+          <input
+            type="text"
+            placeholder="Search Products..."
+            [value]="searchTerm()"
+            (input)="onSearchChange($event)"
+            (keydown)="onKeyDown($event)"
+            class="w-full pr-10 pl-4 py-2 rounded-3xl border-none bg-[rgb(248,249,250)] focus:outline-none focus:ring-2 focus:ring-amber-500 text-sm"
+          />
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="w-5 h-5 absolute right-3 top-2.5 text-gray-400"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 104.5 4.5a7.5 7.5 0 0012.15 12.15z"
+            />
+          </svg>
+
+          <!-- Search Dropdown Mobile -->
+          @if (searchTerm() && filteredProducts().length) {
+          <div class="absolute mt-1 w-full bg-white border border-gray-300 rounded-lg shadow-lg max-h-60 overflow-y-auto z-50">
+            @for (product of filteredProducts(); track product.id; let i = $index) {
+            <div
+              (click)="goToProduct(product.id); closeMobileMenu()"
+              [class.bg-amber-100]="activeIndex() === i"
+              class="p-2 hover:bg-amber-100 cursor-pointer transition text-sm"
+            >
+              {{ product.name }}
+            </div>
+            }
+          </div>
+          }
+
+          @if (searchTerm() && !filteredProducts().length) {
+          <div class="absolute mt-1 w-full bg-white border border-gray-300 rounded-lg shadow-lg p-2 text-gray-500 z-50 text-sm">
+            No products found.
+          </div>
+          }
+        </div>
+
+        <!-- Mobile Nav Links -->
+        <ul class="flex flex-col items-center gap-3 py-2">
+          <li>
+            <a 
+              routerLink="/home" 
+              routerLinkActive="active-link" 
+              class="font-medium transition cursor-pointer hover:text-amber-700 text-base"
+              (click)="closeMobileMenu()"
+            >
+              Home
+            </a>
+          </li>
+          <li>
+            <a 
+              routerLink="/shop" 
+              routerLinkActive="active-link" 
+              class="font-medium transition cursor-pointer hover:text-amber-700 text-base"
+              (click)="closeMobileMenu()"
+            >
+              Shop
+            </a>
+          </li>
+          <li>
+            <a 
+              routerLink="/about" 
+              routerLinkActive="active-link" 
+              class="font-medium transition cursor-pointer hover:text-amber-700 text-base"
+              (click)="closeMobileMenu()"
+            >
+              About Us
+            </a>
+          </li>
+          <li>
+            <a 
+              routerLink="/contacts" 
+              routerLinkActive="active-link" 
+              class="font-medium transition cursor-pointer hover:text-amber-700 text-base"
+              (click)="closeMobileMenu()"
+            >
+              Contact Us
+            </a>
+          </li>
+        </ul>
+
+        <!-- Mobile Icons -->
+        <div class="flex justify-center items-center gap-6 py-2">
+          <!-- Favorites Icon Mobile -->
+          @if (isLoggedIn()) {
+          <div class="relative">
+            <a class="cursor-pointer" routerLink="/favorites" (click)="closeMobileMenu()">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="w-7 h-7 hover:text-red-500 transition"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M21 8.25c0-2.485-2.239-4.5-5-4.5-1.657 0-3.156.895-4 2.236A4.497 4.497 0 008 3.75C5.239 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
+                />
+              </svg>
+            </a>
+
+            @if (favoritesCount() > 0) {
+            <span
+              class="absolute -top-1 -right-2 bg-amber-600 text-white text-xs font-semibold rounded-full w-5 h-5 flex items-center justify-center transition"
+            >
+              {{ favoritesCount() }}
+            </span>
+            }
+          </div>
+          }
+
+          <!-- Cart Icon Mobile -->
+          @if (isLoggedIn()) {
+          <div class="relative">
+            <a class="cursor-pointer" routerLink="/cart" (click)="closeMobileMenu()">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="w-7 h-7 hover:text-amber-500 transition"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M2.25 3h1.386c.51 0 .955.343 1.086.835l.383 1.437m0 0l1.358 5.094a2.25 2.25 0 002.187 1.684h7.426a2.25 2.25 0 002.187-1.684l1.358-5.094m-14.579 0h14.579m-9.579 11.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm6 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z"
+                />
+              </svg>
+            </a>
+
+            @if (cartItemCount() > 0) {
+            <span
+              class="absolute -top-1 -right-2 bg-amber-600 text-white text-xs font-semibold rounded-full w-5 h-5 flex items-center justify-center transition"
+            >
+              {{ cartItemCount() }}
+            </span>
+            }
+          </div>
+          }
+
+          <!-- Login/User Mobile -->
+          @if (!isLoggedIn()) {
+          <a
+            routerLink="/login"
+            routerLinkActive="active-link"
+            class="font-medium transition hover:text-amber-700 cursor-pointer text-base"
+            (click)="closeMobileMenu()"
+          >
+            Login
+          </a>
+          }
+
+          @if (isLoggedIn()) {
+          <div class="relative">
+            <button
+              (click)="toggleDropdown(); $event.stopPropagation()"
+              class="w-10 h-10 rounded-full bg-amber-600 text-white font-bold flex items-center justify-center hover:bg-amber-700 transition focus:outline-none focus:ring-2 focus:ring-amber-500"
+              [title]="getUserName()"
+            >
+              {{ getInitials() }}
+            </button>
+
+            @if (isDropdownOpen()) {
+            <div
+              (click)="$event.stopPropagation()"
+              class="absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-xl py-1 z-50 border border-gray-200 dropdown-enter"
+            >
+              <div class="px-4 py-3 border-b border-gray-200">
+                <p class="text-sm font-semibold text-gray-800 truncate">
+                  {{ getUserName() }}
+                </p>
+                <p class="text-xs text-gray-500 truncate">{{ getUserEmail() }}</p>
+              </div>
+              
+              @if (isAdmin()) {
+              <a
+                routerLink="/dashboard"
+                (click)="closeDropdown(); closeMobileMenu()"
+                class="w-full text-left px-4 py-2.5 text-sm text-gray-700 hover:bg-amber-50 transition flex items-center gap-2 cursor-pointer"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="w-5 h-5"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M9 17.25v1.007a3 3 0 01-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0115 18.257V17.25m6-12V15a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 15V5.25m18 0A2.25 2.25 0 0018.75 3H5.25A2.25 2.25 0 003 5.25m18 0V12a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 12V5.25"
+                  />
+                </svg>
+                Dashboard
+              </a>
+              }
+
+              <button
+                (click)="logout(); closeMobileMenu()"
+                class="w-full text-left px-4 py-2.5 text-sm text-gray-700 hover:bg-amber-50 transition flex items-center gap-2"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="w-5 h-5"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9"
+                  />
+                </svg>
+                Logout
+              </button>
+            </div>
+            }
+          </div>
+          }
+        </div>
+      </div>
+      }
     </div>
   </div>
 </div>

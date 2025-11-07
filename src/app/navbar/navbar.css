@@ -18,8 +18,6 @@
 }
 
 /* Mobile menu animations */
-@media (max-width: 768px) {
-  ul {
-    animation: slideDown 0.3s ease-out;
-  }
+.mobile-menu-enter {
+  animation: slideDown 0.3s ease-out;
 }

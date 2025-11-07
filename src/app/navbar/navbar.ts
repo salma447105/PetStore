@@ -75,6 +75,16 @@ export class Navbar implements OnInit {
       .subscribe(data => {
         this.products.set(data);
       });
+
+    // Close dropdown when clicking outside on mobile
+    if (typeof document !== 'undefined') {
+      document.addEventListener('click', (event) => {
+        const target = event.target as HTMLElement;
+        if (!target.closest('.relative') && this.isDropdownOpen()) {
+          this.closeDropdown();
+        }
+      });
+    }
   }
 
   ngOnInit() {
