@@ -16,3 +16,8 @@
     transform: translateY(0);
   }
 }
+
+/* Mobile menu animations */
+.mobile-menu-enter {
+  animation: slideDown 0.3s ease-out;
+}

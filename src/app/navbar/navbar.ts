@@ -30,6 +30,9 @@ export class Navbar implements OnInit {
   // Dropdown
   isDropdownOpen = signal(false);
   
+  // Mobile Menu
+  isMobileMenuOpen = signal(false);
+  
   // Computed signals
   favoritesCount = signal(0);
   cartItemCount = computed(() => this.cartService.getItemCount());
@@ -72,6 +75,16 @@ export class Navbar implements OnInit {
       .subscribe(data => {
         this.products.set(data);
       });
+
+    // Close dropdown when clicking outside on mobile
+    if (typeof document !== 'undefined') {
+      document.addEventListener('click', (event) => {
+        const target = event.target as HTMLElement;
+        if (!target.closest('.relative') && this.isDropdownOpen()) {
+          this.closeDropdown();
+        }
+      });
+    }
   }
 
   ngOnInit() {
@@ -142,9 +155,19 @@ export class Navbar implements OnInit {
 
   async logout() {
     this.closeDropdown();
+    this.closeMobileMenu();
     const success = await this.authService.logout();
     if (success) {
       this.router.navigate(['/home']);
     }
+  }
+
+  // Mobile menu methods
+  toggleMobileMenu() {
+    this.isMobileMenuOpen.update(open => !open);
+  }
+
+  closeMobileMenu() {
+    this.isMobileMenuOpen.set(false);
   }
 }
