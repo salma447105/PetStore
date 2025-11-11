@@ -1,43 +1,30 @@
-<footer
-  class="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-slate-300 w-full mt-12"
->
+<footer class="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-slate-300 w-full mt-12">
   <div
-    class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12"
-  >
+    class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
     <div class="sm:col-span-2 lg:col-span-1">
       <h2 class="text-2xl lg:text-3xl font-bold text-white mb-4 flex items-center gap-2">
         <lucide-angular name="sun" class="w-7 h-7 text-amber-400"></lucide-angular>
-        <span class="bg-gradient-to-r from-amber-400 to-orange-500 bg-clip-text text-transparent"
-          >PetStore</span
-        >
+        <span class="bg-gradient-to-r from-amber-400 to-orange-500 bg-clip-text text-transparent">PetStore</span>
       </h2>
       <p class="text-sm text-slate-400 leading-relaxed mb-6">
         Your trusted partner for pet food, toys, and accessories. Because your pet deserves the
         best!
       </p>
       <div class="flex space-x-4">
-        <a
-          href="#"
-          class="bg-slate-700/50 hover:bg-amber-500 p-2.5 rounded-full transition-all duration-300 hover:scale-110 group"
-          ><lucide-angular
-            [name]="icons.Facebook"
-            class="w-5 h-5 text-slate-300 group-hover:text-white"></lucide-angular></a>
-        <a
-          href="#"
-          class="bg-slate-700/50 hover:bg-amber-500 p-2.5 rounded-full transition-all duration-300 hover:scale-110 group"
-          ><lucide-angular
-            [name]="icons.Instagram"
-            class="w-5 h-5 text-slate-300 group-hover:text-white"
-          ></lucide-angular
-        ></a>
-        <a
-          href="#"
-          class="bg-slate-700/50 hover:bg-amber-500 p-2.5 rounded-full transition-all duration-300 hover:scale-110 group"
-          ><lucide-angular
-            [name]="icons.Twitter"
-            class="w-5 h-5 text-slate-300 group-hover:text-white"
-          ></lucide-angular
-        ></a>
+        <a href="#"
+          class="bg-slate-700/50 hover:bg-amber-500 p-2.5 rounded-full transition-all duration-300 hover:scale-110 group">
+          <lucide-angular [name]="icons.Facebook" class="w-5 h-5 text-slate-300 group-hover:text-white">
+          </lucide-angular>
+        </a>
+        <a href="#"
+          class="bg-slate-700/50 hover:bg-amber-500 p-2.5 rounded-full transition-all duration-300 hover:scale-110 group">
+          <lucide-angular [name]="icons.Instagram" class="w-5 h-5 text-slate-300 group-hover:text-white">
+          </lucide-angular>
+        </a>
+        <a href="#"
+          class="bg-slate-700/50 hover:bg-amber-500 p-2.5 rounded-full transition-all duration-300 hover:scale-110 group">
+          <lucide-angular [name]="icons.Twitter" class="w-5 h-5 text-slate-300 group-hover:text-white"></lucide-angular>
+        </a>
       </div>
     </div>
     <div>
@@ -45,10 +32,10 @@
         Company
       </h3>
       <ul class="space-y-3 text-sm">
-        <li><a href="#" class="hover:text-amber-400">About Us</a></li>
-        <li><a href="#" class="hover:text-amber-400">Blog</a></li>
-        <li><a href="#" class="hover:text-amber-400">Careers</a></li>
-        <li><a href="#" class="hover:text-amber-400">Contact</a></li>
+        <li><a routerLink="/about" class="hover:text-amber-400">About Us</a></li>
+        <li><a routerLink="/" class="hover:text-amber-400">Blog</a></li>
+        <li><a routerLink="/" class="hover:text-amber-400">Careers</a></li>
+        <li><a routerLink="/contacts" class="hover:text-amber-400">Contact</a></li>
       </ul>
     </div>
     <div>
@@ -68,19 +55,16 @@
       </h3>
       <ul class="space-y-4 text-sm">
         <li class="flex items-start gap-3 text-slate-400">
-          <lucide-angular
-            [name]="icons.Location"
-            class="w-5 h-5 text-amber-400 mt-0.5"
-          ></lucide-angular
-          ><span>123 Pet Street, Cairo, Egypt</span>
+          <lucide-angular [name]="icons.Location" class="w-5 h-5 text-amber-400 mt-0.5"></lucide-angular><span>123 Pet
+            Street, Cairo, Egypt</span>
         </li>
         <li class="flex items-center gap-3 text-slate-400 hover:text-amber-400">
-          <lucide-angular [name]="icons.Phone" class="w-5 h-5 text-amber-400"></lucide-angular
-          ><a href="tel:+201001234567">+20 100 123 4567</a>
+          <lucide-angular [name]="icons.Phone" class="w-5 h-5 text-amber-400"></lucide-angular><a
+            href="tel:+201001234567">+20 100 123 4567</a>
         </li>
         <li class="flex items-center gap-3 text-slate-400 hover:text-amber-400">
-          <lucide-angular [name]="icons.Mail" class="w-5 h-5 text-amber-400"></lucide-angular
-          ><a href="mailto:support@petstore.com">support@petstore.com</a>
+          <lucide-angular [name]="icons.Mail" class="w-5 h-5 text-amber-400"></lucide-angular><a
+            href="mailto:support@petstore.com">support@petstore.com</a>
         </li>
       </ul>
     </div>
@@ -88,8 +72,7 @@
 
   <div class="border-t border-slate-700/50">
     <div
-      class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col sm:flex-row justify-between items-center gap-4 text-sm text-slate-500"
-    >
+      class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col sm:flex-row justify-between items-center gap-4 text-sm text-slate-500">
       <p>&copy; {{ currentYear }} PetStore. All rights reserved.</p>
       <div class="flex gap-6 text-xs">
         <a href="#" class="hover:text-amber-400">Privacy Policy</a>

@@ -9,11 +9,12 @@ import {
   PhoneIcon,
   MailIcon,
 } from 'lucide-angular';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-footer',
   standalone: true,
-  imports: [CommonModule, LucideAngularModule],
+  imports: [CommonModule, LucideAngularModule, RouterLink],
   templateUrl: './footer.html',
 })
 export class Footer {
