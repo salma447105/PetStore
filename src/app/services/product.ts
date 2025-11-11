@@ -1,18 +1,18 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, catchError, of } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductService {
-private apiUrl = 'http://localhost:3000';
 
 
   constructor(private http: HttpClient) {}
 
   getProducts(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/products`).pipe(
+    return this.http.get<any[]>(`${environment.dbUrl}/products`).pipe(
       catchError(error => {
         console.error('Error fetching products:', error);
         return of([]);
@@ -21,7 +21,7 @@ private apiUrl = 'http://localhost:3000';
   }
 
   getProductsByCategory(categoryId: number): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/products?categoryId=${categoryId}`).pipe(
+    return this.http.get<any[]>(`${environment.dbUrl}/products?categoryId=${categoryId}`).pipe(
       catchError(error => {
         console.error('Error fetching products by category:', error);
         return of([]);
@@ -30,7 +30,7 @@ private apiUrl = 'http://localhost:3000';
   }
 
   getCategories(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/categories`).pipe(
+    return this.http.get<any[]>(`${environment.dbUrl}/categories`).pipe(
       catchError(error => {
         console.error('Error fetching categories:', error);
         return of([]);
@@ -38,7 +38,7 @@ private apiUrl = 'http://localhost:3000';
     );
   }
 getProductsByPet(petId: number): Observable<any[]> {
-  return this.http.get<any[]>(`${this.apiUrl}/products?petId=${petId}`).pipe(
+  return this.http.get<any[]>(`${environment.dbUrl}/products?petId=${petId}`).pipe(
     catchError(error => {
       console.error('Error fetching products by pet:', error);
       return of([]);
@@ -47,7 +47,7 @@ getProductsByPet(petId: number): Observable<any[]> {
 }
 
   getPets(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/pets`).pipe(
+    return this.http.get<any[]>(`${environment.dbUrl}/pets`).pipe(
       catchError(error => {
         console.error('Error fetching pets:', error);
         return of([]);
@@ -56,7 +56,7 @@ getProductsByPet(petId: number): Observable<any[]> {
   }
 
   getProductById(id: number): Observable<any> {
-  return this.http.get<any>(`${this.apiUrl}/products/${id}`).pipe(
+  return this.http.get<any>(`${environment.dbUrl}/products/${id}`).pipe(
     catchError(error => {
       console.error('Error fetching product:', error);
       return of(null);

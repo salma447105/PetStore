@@ -5,6 +5,7 @@ import { RouterLink } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 import { StripeService } from '../services/stripe.service';
 import { CartService } from '../services/cart/cart.service';
+import { environment } from '../../environments/environment';
 
 interface CartItem {
   id: number;
@@ -103,7 +104,7 @@ export class Cart implements OnInit {
       }));
 
       const response = await firstValueFrom(
-        this.http.post<{ url?: string; id?: string }>('http://localhost:4100/create-checkout-session', {
+        this.http.post<{ url?: string; id?: string }>(`${environment.apiUrl}/create-checkout-session`, {
           items,
           total: this.total
         })
